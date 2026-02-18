@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Resto Agent — The Solution for Hotels</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1A3A5C;
+  --accent: #C8A45A;
+  --accent-dark: #A8863A;
+  --dark: #0D1B2A;
+  --darker: #060F1A;
+  --green: #27AE60;
+  --red: #E74C3C;
+  --warn: #E8973E;
+  --gray: #8892A0;
+  --light: #F8F9FA;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--light);
+  color: var(--dark);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
+  color: white;
+  padding: 80px 24px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(200,164,90,0.12) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: -15%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(26,58,92,0.2) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(200,164,90,0.2);
+  color: var(--accent);
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+}
+.hero h1 {
+  font-size: clamp(30px, 5.5vw, 52px);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+.hero h1 span { color: var(--accent); }
+.hero p {
+  font-size: 18px;
+  color: rgba(255,255,255,0.65);
+  max-width: 640px;
+  margin: 0 auto 32px;
+  font-weight: 300;
+}
+.hero-cta {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--dark);
+  padding: 14px 36px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+.hero-cta:hover { background: var(--accent-dark); transform: translateY(-2px); }
+.hero-sub { margin-top: 12px; font-size: 14px; color: rgba(255,255,255,0.45); }
+
+/* STATS BAR */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1px;
+  background: var(--primary);
+  max-width: 900px;
+  margin: -30px auto 0;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
+.stat-item {
+  background: white;
+  padding: 24px 16px;
+  text-align: center;
+}
+.stat-num { font-size: 28px; font-weight: 900; color: var(--primary); }
+.stat-label { font-size: 13px; color: var(--gray); margin-top: 4px; }
+
+/* SECTIONS */
+section { padding: 60px 24px; max-width: 1000px; margin: 0 auto; }
+.section-title { text-align: center; font-size: 32px; font-weight: 800; margin-bottom: 12px; }
+.section-sub { text-align: center; color: var(--gray); font-size: 16px; margin-bottom: 48px; }
+
+/* CHALLENGE CARDS */
+.challenge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+.challenge-card {
+  background: white;
+  border-radius: 12px;
+  padding: 28px 24px;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+  border-top: 3px solid var(--accent);
+  transition: transform 0.3s;
+}
+.challenge-card:hover { transform: translateY(-4px); }
+.challenge-icon { font-size: 36px; margin-bottom: 12px; }
+.challenge-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.challenge-card p { font-size: 14px; color: var(--gray); line-height: 1.7; }
+.challenge-stat {
+  display: inline-block;
+  background: rgba(231,76,60,0.1);
+  color: var(--red);
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 12px;
+}
+
+/* SOLUTION */
+.solution-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.solution-card {
+  background: white;
+  border-radius: 12px;
+  padding: 32px 28px;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+  border-left: 4px solid var(--accent);
+}
+.sol-num {
+  display: inline-block;
+  background: var(--primary);
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 32px;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.solution-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+.solution-card p { font-size: 15px; color: var(--gray); line-height: 1.7; }
+.hotel-badge {
+  display: inline-block;
+  background: rgba(200,164,90,0.15);
+  color: var(--accent-dark);
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+/* DEMO */
+.demo-section {
+  background: var(--dark);
+  color: white;
+  border-radius: 16px;
+  padding: 48px 32px;
+  margin: 40px auto;
+  max-width: 950px;
+}
+.demo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-top: 32px;
+}
+.demo-box {
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.demo-box h4 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--accent);
+}
+.demo-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.demo-table th {
+  padding: 8px 10px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.demo-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.badge-ok { background: rgba(39,174,96,0.2); color: #2ECC71; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.badge-warn { background: rgba(232,151,62,0.2); color: var(--warn); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.badge-bad { background: rgba(231,76,60,0.2); color: #E74C3C; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.demo-note { text-align: center; color: rgba(255,255,255,0.4); font-size: 13px; margin-top: 24px; }
+
+/* ROI */
+.roi-section {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+  color: white;
+  border-radius: 16px;
+  padding: 48px 32px;
+  margin: 40px auto;
+  max-width: 800px;
+  text-align: center;
+}
+.roi-section h3 { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
+.roi-section .sub { color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 28px; }
+.roi-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.roi-item {
+  background: rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.roi-item .label { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 4px; }
+.roi-item .value { font-size: 28px; font-weight: 900; color: var(--accent); }
+.roi-total {
+  font-size: 22px;
+  font-weight: 800;
+  color: #2ECC71;
+  padding-top: 20px;
+  border-top: 2px dashed rgba(255,255,255,0.15);
+}
+.roi-vs {
+  margin-top: 12px;
+  font-size: 15px;
+  color: rgba(255,255,255,0.6);
+}
+.roi-vs strong { color: var(--accent); }
+
+/* PRICING */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+.price-card {
+  background: white;
+  border-radius: 16px;
+  padding: 36px 28px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+  position: relative;
+  text-align: center;
+}
+.price-card.featured {
+  border: 2px solid var(--accent);
+  transform: scale(1.03);
+}
+.price-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: var(--dark);
+  padding: 4px 16px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.price-icon { font-size: 36px; margin-bottom: 8px; }
+.price-card h3 { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+.price-card .rooms { font-size: 14px; color: var(--gray); margin-bottom: 8px; }
+.price-amount { font-size: 42px; font-weight: 900; color: var(--primary); margin: 8px 0 4px; }
+.price-amount span { font-size: 16px; font-weight: 400; color: var(--gray); }
+.price-roi {
+  display: inline-block;
+  background: rgba(39,174,96,0.1);
+  color: var(--green);
+  padding: 4px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.price-features { list-style: none; text-align: left; margin: 20px 0; }
+.price-features li {
+  padding: 8px 0;
+  font-size: 14px;
+  border-bottom: 1px solid #F0F0F0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.price-features li::before { content: '✓'; color: var(--green); font-weight: 700; }
+.price-features li.no::before { content: '—'; color: #DDD; }
+.price-cta {
+  display: block;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s;
+}
+.price-cta-primary { background: var(--primary); color: white; }
+.price-cta-gold { background: var(--accent); color: var(--dark); }
+.price-cta-outline { border: 2px solid var(--primary); color: var(--primary); background: transparent; }
+.price-cta:hover { transform: translateY(-2px); }
+
+/* PROCESS */
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 32px;
+}
+.process-step {
+  text-align: center;
+  padding: 24px;
+}
+.process-num {
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 48px;
+  margin-bottom: 12px;
+}
+.process-step h4 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.process-step p { font-size: 13px; color: var(--gray); }
+
+/* GUARANTEE */
+.guarantee {
+  text-align: center;
+  padding: 48px 24px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.guarantee-icon { font-size: 56px; margin-bottom: 16px; }
+.guarantee h3 { font-size: 26px; font-weight: 800; margin-bottom: 12px; }
+.guarantee p { font-size: 16px; color: var(--gray); line-height: 1.7; }
+
+/* FOOTER */
+.footer-cta {
+  background: var(--dark);
+  color: white;
+  text-align: center;
+  padding: 60px 24px;
+}
+.footer-cta h2 { font-size: 32px; font-weight: 800; margin-bottom: 12px; }
+.footer-cta p { color: rgba(255,255,255,0.6); margin-bottom: 28px; font-size: 16px; }
+.footer-cta a {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--dark);
+  padding: 14px 40px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.footer-contact { margin-top: 20px; font-size: 14px; color: rgba(255,255,255,0.4); }
+
+@media (max-width: 768px) {
+  .hero { padding: 60px 20px 40px; }
+  section { padding: 40px 16px; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .price-card.featured { transform: none; }
+  .roi-grid { grid-template-columns: 1fr; }
+  .demo-grid { grid-template-columns: 1fr; }
+  .stats-bar { margin-top: -20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🏨 AI for the Hospitality Industry</div>
+  <h1>Hotel Food Procurement<br><span>On Another Level</span></h1>
+  <p>Multi-kitchen, dozens of suppliers, hundreds of items. One platform to manage your entire hotel food chain — from breakfast to banquets.</p>
+  <a href="#pricing" class="hero-cta">Book a Meeting — First Month Free</a>
+  <div class="hero-sub">Full food cost report for all kitchens within 48 hours</div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">8+</div>
+    <div class="stat-label">Kitchens in parallel</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">80+</div>
+    <div class="stat-label">Managed suppliers</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">24/7</div>
+    <div class="stat-label">Continuous monitoring</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">15%+</div>
+    <div class="stat-label">Average savings</div>
+  </div>
+</div>
+
+<!-- CHALLENGES -->
+<section style="padding-top:80px">
+  <div class="section-title">The Challenges of Hotel F&B</div>
+  <div class="section-sub">Complexity that a regular restaurant never faces</div>
+  <div class="challenge-grid">
+    <div class="challenge-card">
+      <div class="challenge-icon">🍳</div>
+      <h3>Multi-Kitchen, Zero Visibility</h3>
+      <p>Main dining, lobby, banquets, room service, pool bar. Each orders separately, no one sees the full picture</p>
+      <div class="challenge-stat">Duplicate orders: 8-12% of budget</div>
+    </div>
+    <div class="challenge-card">
+      <div class="challenge-icon">📊</div>
+      <h3>Food Cost in the Dark</h3>
+      <p>With hundreds of items and dozens of menus, nobody truly knows the cost per dish. Reports arrive a month late</p>
+      <div class="challenge-stat">2-5% over target = tens of thousands $</div>
+    </div>
+    <div class="challenge-card">
+      <div class="challenge-icon">🔄</div>
+      <h3>Suppliers Without Control</h3>
+      <p>Framework agreements nobody tracks. Prices creeping up without anyone noticing</p>
+      <div class="challenge-stat">5-15% excess over contract prices</div>
+    </div>
+    <div class="challenge-card">
+      <div class="challenge-icon">📅</div>
+      <h3>Banquets & Events</h3>
+      <p>Per-guest pricing, fluctuating quantities, last-minute cancellations. Every event is a gamble on profitability</p>
+      <div class="challenge-stat">Average pricing error: 18% on events</div>
+    </div>
+    <div class="challenge-card">
+      <div class="challenge-icon">📈</div>
+      <h3>Fluctuating Occupancy</h3>
+      <p>Thursday 95% occupancy, Sunday 40%. Quantities should adjust, but orders stay the same</p>
+      <div class="challenge-stat">Food waste: 12-20% in low season</div>
+    </div>
+    <div class="challenge-card">
+      <div class="challenge-icon">👥</div>
+      <h3>Cross-Department Communication</h3>
+      <p>The chef orders, procurement approves, finance discovers a month later. No shared language, no single dashboard</p>
+      <div class="challenge-stat">20+ hours/week on coordination</div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section>
+  <div class="section-title">What We Do Differently</div>
+  <div class="section-sub">One platform for your hotel's entire food supply chain</div>
+  <div class="solution-grid">
+    <div class="solution-card">
+      <div class="sol-num">1</div>
+      <h3>Multi-Kitchen</h3>
+      <p>Each kitchen = a separate unit with its own menu, inventory, and orders. But everything rolls up to a single hotel-level dashboard</p>
+      <div class="hotel-badge">Main Dining • Lobby • Banquets • Room Service</div>
+    </div>
+    <div class="solution-card">
+      <div class="sol-num">2</div>
+      <h3>Real-Time Food Cost</h3>
+      <p>Not a monthly report. Live food cost per dish, per kitchen, with instant alerts when anything exceeds target</p>
+      <div class="hotel-badge">Daily updates • Deviation alerts</div>
+    </div>
+    <div class="solution-card">
+      <div class="sol-num">3</div>
+      <h3>Supplier & Contract Management</h3>
+      <p>Track framework agreements, automatic price comparison, and alerts when a supplier exceeds the agreed price</p>
+      <div class="hotel-badge">Contracts • Tenders • Comparison</div>
+    </div>
+    <div class="solution-card">
+      <div class="sol-num">4</div>
+      <h3>Occupancy-Based Forecasting</h3>
+      <p>Connected to occupancy data = adjusted order quantities. 40% occupancy? Quantities drop automatically</p>
+      <div class="hotel-badge">AI • Demand forecasting • Waste reduction</div>
+    </div>
+    <div class="solution-card">
+      <div class="sol-num">5</div>
+      <h3>Banquet Costing</h3>
+      <p>Precise per-guest cost for every event menu. Including ancillary costs, labor, and waste factor</p>
+      <div class="hotel-badge">Events • Conferences • Weddings</div>
+    </div>
+    <div class="solution-card">
+      <div class="sol-num">6</div>
+      <h3>Centralized Ordering</h3>
+      <p>All orders through one channel. Chef submits a request, procurement approves, order goes out. Everything logged</p>
+      <div class="hotel-badge">WhatsApp • Approvals • Full audit log</div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<div class="demo-section">
+  <div class="section-title" style="text-align:center; color:white">Live Example — 200-Room Hotel</div>
+  <p style="text-align:center; color:rgba(255,255,255,0.5); margin-top:8px; font-size:14px">4 kitchens, 45 suppliers, 380 inventory items</p>
+
+  <div class="demo-grid">
+    <div class="demo-box">
+      <h4>🍽️ Main Dining — Dinner Service</h4>
+      <table class="demo-table">
+        <thead><tr><th>Dish</th><th>Cost</th><th>FC</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Ribeye 300g</td><td>$19.50</td><td>34%</td><td><span class="badge-warn">⚠️</span></td></tr>
+          <tr><td>Sea Bass Fillet</td><td>$7.60</td><td>24%</td><td><span class="badge-ok">✅</span></td></tr>
+          <tr><td>Mushroom Ravioli</td><td>$3.80</td><td>19%</td><td><span class="badge-ok">✅</span></td></tr>
+          <tr><td>Glazed Salmon</td><td>$10.30</td><td>29%</td><td><span class="badge-ok">✅</span></td></tr>
+          <tr><td>Lamb Rack</td><td>$24.20</td><td>48%</td><td><span class="badge-bad">🔴</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="demo-box">
+      <h4>🎉 Banquets — Event Menu</h4>
+      <table class="demo-table">
+        <thead><tr><th>Menu</th><th>Cost/Guest</th><th>Price</th><th>Margin</th></tr></thead>
+        <tbody>
+          <tr><td>Cocktail + Dinner</td><td>$26</td><td>$87</td><td><span class="badge-ok">70%</span></td></tr>
+          <tr><td>Business Lunch</td><td>$13</td><td>$49</td><td><span class="badge-ok">73%</span></td></tr>
+          <tr><td>Premium Celebration</td><td>$37</td><td>$115</td><td><span class="badge-ok">68%</span></td></tr>
+          <tr><td>Weekend Brunch</td><td>$17</td><td>$52</td><td><span class="badge-ok">67%</span></td></tr>
+          <tr><td>VIP Wedding</td><td>$50</td><td>$130</td><td><span class="badge-warn">61%</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="demo-note">* Sample data — your actual report is calculated from your menus and suppliers</div>
+</div>
+
+<!-- ROI -->
+<div class="roi-section">
+  <h3>💰 ROI for a Mid-Size Hotel (200 rooms)</h3>
+  <div class="sub">Monthly food budget: ~$140,000</div>
+  <div class="roi-grid">
+    <div class="roi-item">
+      <div class="label">Untracked food cost</div>
+      <div class="value">$4,200</div>
+    </div>
+    <div class="roi-item">
+      <div class="label">Supplier contract overcharges</div>
+      <div class="value">$10,500</div>
+    </div>
+    <div class="roi-item">
+      <div class="label">Waste & spoilage</div>
+      <div class="value">$7,000</div>
+    </div>
+    <div class="roi-item">
+      <div class="label">Unnecessary labor hours</div>
+      <div class="value">$2,200</div>
+    </div>
+  </div>
+  <div class="roi-total">Potential savings: $23,900/month</div>
+  <div class="roi-vs">Platform cost: <strong>$2,199</strong> — 10x return</div>
+</div>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-title">Plans for Hotels</div>
+  <div class="section-sub">First month free. Full onboarding included.</div>
+  <div class="pricing-grid">
+
+    <div class="price-card">
+      <div class="price-icon">🏨</div>
+      <h3>Boutique</h3>
+      <div class="rooms">Up to 100 rooms</div>
+      <div class="price-amount">$1,399<span>/mo</span></div>
+      <div class="price-roi">Avg. savings: ~$7,000/mo</div>
+      <ul class="price-features">
+        <li>Up to 3 kitchens</li>
+        <li>Up to 30 suppliers</li>
+        <li>Real-time food cost</li>
+        <li>Centralized ordering (WhatsApp)</li>
+        <li>Supplier comparison</li>
+        <li>Inventory management + alerts</li>
+        <li>Daily report for procurement</li>
+        <li>Onboarding session (4 hours)</li>
+        <li class="no">Occupancy forecasting</li>
+        <li class="no">Banquet costing</li>
+      </ul>
+      <a href="#" class="price-cta price-cta-outline">Book a Meeting</a>
+    </div>
+
+    <div class="price-card featured">
+      <div class="price-badge">⭐ Most Popular</div>
+      <div class="price-icon">🏩</div>
+      <h3>Urban Hotel</h3>
+      <div class="rooms">100–300 rooms</div>
+      <div class="price-amount">$2,199<span>/mo</span></div>
+      <div class="price-roi">Avg. savings: ~$24,000/mo</div>
+      <ul class="price-features">
+        <li>Up to 6 kitchens</li>
+        <li>Up to 60 suppliers</li>
+        <li>Everything in Boutique +</li>
+        <li>Occupancy-based forecasting</li>
+        <li>Banquet & event costing</li>
+        <li>Framework contract management</li>
+        <li>GM / CFO dashboard</li>
+        <li>24/7 support</li>
+        <li>Onboarding session (8 hrs + implementation)</li>
+      </ul>
+      <a href="#" class="price-cta price-cta-gold">Book a Meeting</a>
+    </div>
+
+    <div class="price-card">
+      <div class="price-icon">🌟</div>
+      <h3>Chain / Resort</h3>
+      <div class="rooms">300+ rooms / multi-property</div>
+      <div class="price-amount">$3,599<span>/mo</span></div>
+      <div class="price-roi">Avg. savings: ~$55,000+/mo</div>
+      <ul class="price-features">
+        <li>Unlimited kitchens</li>
+        <li>Unlimited suppliers</li>
+        <li>Everything in Urban +</li>
+        <li>Multi-property / multi-hotel</li>
+        <li>API to existing systems (PMS, ERP)</li>
+        <li>Custom chain-level reports</li>
+        <li>Dedicated success manager</li>
+        <li>Guaranteed SLA</li>
+        <li>Full implementation + staff training</li>
+      </ul>
+      <a href="#" class="price-cta price-cta-primary">Book a Meeting</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section>
+  <div class="section-title">How to Get Started</div>
+  <div class="process-grid">
+    <div class="process-step">
+      <div class="process-num">1</div>
+      <h4>Meeting</h4>
+      <p>We meet, understand your structure, kitchens, and suppliers</p>
+    </div>
+    <div class="process-step">
+      <div class="process-num">2</div>
+      <h4>Free Report</h4>
+      <p>Within 48 hours — a full food cost report for all kitchens</p>
+    </div>
+    <div class="process-step">
+      <div class="process-num">3</div>
+      <h4>Pilot</h4>
+      <p>One month free, full implementation, staff training</p>
+    </div>
+    <div class="process-step">
+      <div class="process-num">4</div>
+      <h4>Results</h4>
+      <p>After 30 days — savings report. No savings? No charge</p>
+    </div>
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<div class="guarantee">
+  <div class="guarantee-icon">🛡️</div>
+  <h3>Zero Risk</h3>
+  <p>First month completely free including implementation and training.<br>No commitment, no exit penalties.<br><strong>No savings? You don't pay. Simple.</strong></p>
+</div>
+
+<!-- FOOTER -->
+<div class="footer-cta">
+  <h2>Ready to Transform Your F&B Department?</h2>
+  <p>Send us your kitchen list and suppliers. Within 48 hours you'll get a full report — free, no strings attached.</p>
+  <a href="https://wa.me/972542559886?text=Hi%2C%20I%20manage%20hotel%20procurement%20and%20I%27d%20like%20to%20learn%20about%20My%20Resto%20Agent">Message Us on WhatsApp</a>
+  <div class="footer-contact">+972-54-255-9886 | We work with hotels worldwide</div>
+</div>
+
+</body>
+</html>
