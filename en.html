@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Resto Agent — Your Digital Restaurant Partner</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #E85D26;
+  --primary-dark: #C44A1A;
+  --dark: #1A1A2E;
+  --darker: #0F0F1A;
+  --gold: #F5A623;
+  --green: #27AE60;
+  --red: #E74C3C;
+  --gray: #8892A0;
+  --light: #F8F9FA;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--light);
+  color: var(--dark);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
+  color: white;
+  padding: 80px 24px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -30%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(232,93,38,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(232,93,38,0.2);
+  color: var(--primary);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.hero h1 {
+  font-size: clamp(32px, 6vw, 56px);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+.hero h1 span { color: var(--primary); }
+.hero p {
+  font-size: 18px;
+  color: rgba(255,255,255,0.7);
+  max-width: 600px;
+  margin: 0 auto 32px;
+  font-weight: 300;
+}
+.hero-cta {
+  display: inline-block;
+  background: var(--primary);
+  color: white;
+  padding: 14px 36px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+.hero-cta:hover { background: var(--primary-dark); transform: translateY(-2px); }
+.hero-sub { margin-top: 12px; font-size: 14px; color: rgba(255,255,255,0.5); }
+
+section { padding: 60px 24px; max-width: 1000px; margin: 0 auto; }
+.section-title { text-align: center; font-size: 32px; font-weight: 800; margin-bottom: 12px; }
+.section-sub { text-align: center; color: var(--gray); font-size: 16px; margin-bottom: 48px; }
+
+.pain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+.pain-card {
+  background: white;
+  border-radius: 12px;
+  padding: 28px 24px;
+  text-align: center;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+  transition: transform 0.3s;
+}
+.pain-card:hover { transform: translateY(-4px); }
+.pain-icon { font-size: 40px; margin-bottom: 12px; }
+.pain-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.pain-card p { font-size: 14px; color: var(--gray); }
+.pain-stat {
+  display: inline-block;
+  background: rgba(231,76,60,0.1);
+  color: var(--red);
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+.feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+.feat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 32px 28px;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+  border-left: 4px solid var(--primary);
+}
+.feat-num {
+  display: inline-block;
+  background: var(--primary);
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 32px;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.feat-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+.feat-card p { font-size: 15px; color: var(--gray); line-height: 1.7; }
+
+.demo-section {
+  background: var(--dark);
+  color: white;
+  border-radius: 16px;
+  padding: 48px 32px;
+  margin: 40px auto;
+  max-width: 900px;
+}
+.demo-section .section-title { color: white; }
+.demo-table { width: 100%; border-collapse: collapse; margin-top: 24px; font-size: 14px; }
+.demo-table th {
+  background: rgba(255,255,255,0.1);
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.demo-table td { padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.badge-ok { background: rgba(39,174,96,0.2); color: #2ECC71; padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+.badge-warn { background: rgba(245,166,35,0.2); color: var(--gold); padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+.badge-bad { background: rgba(231,76,60,0.2); color: #E74C3C; padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+.demo-note { margin-top: 20px; text-align: center; color: rgba(255,255,255,0.5); font-size: 13px; }
+
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; align-items: start; }
+.price-card {
+  background: white;
+  border-radius: 16px;
+  padding: 36px 28px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+  position: relative;
+  text-align: center;
+}
+.price-card.featured { border: 2px solid var(--primary); transform: scale(1.03); }
+.price-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary);
+  color: white;
+  padding: 4px 16px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.price-icon { font-size: 36px; margin-bottom: 8px; }
+.price-card h3 { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+.price-amount { font-size: 42px; font-weight: 900; color: var(--primary); margin: 12px 0 4px; }
+.price-amount span { font-size: 16px; font-weight: 400; color: var(--gray); }
+.price-roi {
+  display: inline-block;
+  background: rgba(39,174,96,0.1);
+  color: var(--green);
+  padding: 4px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.price-features { list-style: none; text-align: left; margin: 20px 0; }
+.price-features li {
+  padding: 8px 0;
+  font-size: 14px;
+  border-bottom: 1px solid #F0F0F0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.price-features li::before { content: '✓'; color: var(--green); font-weight: 700; }
+.price-features li.no::before { content: '—'; color: #DDD; }
+.price-cta {
+  display: block;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s;
+}
+.price-cta-primary { background: var(--primary); color: white; }
+.price-cta-outline { border: 2px solid var(--primary); color: var(--primary); background: transparent; }
+.price-cta:hover { transform: translateY(-2px); }
+
+.roi-box {
+  background: linear-gradient(135deg, #FFF3E6 0%, #FFEED9 100%);
+  border-radius: 16px;
+  padding: 40px 32px;
+  text-align: center;
+  margin: 40px auto;
+  max-width: 700px;
+}
+.roi-box h3 { font-size: 24px; font-weight: 800; margin-bottom: 24px; }
+.roi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px; }
+.roi-item { background: white; border-radius: 10px; padding: 16px; }
+.roi-item .label { font-size: 13px; color: var(--gray); margin-bottom: 4px; }
+.roi-item .value { font-size: 24px; font-weight: 800; color: var(--primary); }
+.roi-total { font-size: 20px; font-weight: 800; color: var(--green); padding-top: 16px; border-top: 2px dashed rgba(0,0,0,0.1); }
+
+.guarantee { text-align: center; padding: 48px 24px; max-width: 600px; margin: 0 auto; }
+.guarantee-icon { font-size: 56px; margin-bottom: 16px; }
+.guarantee h3 { font-size: 26px; font-weight: 800; margin-bottom: 12px; }
+.guarantee p { font-size: 16px; color: var(--gray); line-height: 1.7; }
+
+.footer-cta {
+  background: var(--dark);
+  color: white;
+  text-align: center;
+  padding: 60px 24px;
+}
+.footer-cta h2 { font-size: 32px; font-weight: 800; margin-bottom: 12px; }
+.footer-cta p { color: rgba(255,255,255,0.6); margin-bottom: 28px; font-size: 16px; }
+.footer-cta a {
+  display: inline-block;
+  background: var(--primary);
+  color: white;
+  padding: 14px 40px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.footer-contact { margin-top: 20px; font-size: 14px; color: rgba(255,255,255,0.4); }
+
+@media (max-width: 768px) {
+  .hero { padding: 60px 20px 40px; }
+  section { padding: 40px 16px; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .price-card.featured { transform: none; }
+  .roi-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">🍽️ AI for Restaurants</div>
+  <h1>Your Digital<br><span>Restaurant Partner</span></h1>
+  <p>Precise food cost, supplier comparison, and WhatsApp ordering. No new app, no complex system. Just a partner that never sleeps.</p>
+  <a href="#pricing" class="hero-cta">Free Month — No Commitment</a>
+  <div class="hero-sub">Get your full food cost report within 24 hours</div>
+</div>
+
+<section>
+  <div class="section-title">Problems Every Restaurant Knows</div>
+  <div class="section-sub">And nobody solves</div>
+  <div class="pain-grid">
+    <div class="pain-card">
+      <div class="pain-icon">⏰</div>
+      <h3>5 Hours a Week</h3>
+      <p>On orders, calling suppliers, checking prices</p>
+      <div class="pain-stat">~20 hours/month wasted</div>
+    </div>
+    <div class="pain-card">
+      <div class="pain-icon">📊</div>
+      <h3>Blind Food Cost</h3>
+      <p>Most restaurants don't know the real cost per dish</p>
+      <div class="pain-stat">2-5% above target = thousands lost</div>
+    </div>
+    <div class="pain-card">
+      <div class="pain-icon">🔄</div>
+      <h3>No Supplier Comparison</h3>
+      <p>Overpaying because there's no time to check alternatives</p>
+      <div class="pain-stat">5-10% overspend on raw materials</div>
+    </div>
+    <div class="pain-card">
+      <div class="pain-icon">🚨</div>
+      <h3>Stock Running Out</h3>
+      <p>Mid-service, no warning, no planning</p>
+      <div class="pain-stat">Embarrassment + lost revenue</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-title">What I Do For You</div>
+  <div class="section-sub">Everything you need, in one place</div>
+  <div class="feat-grid">
+    <div class="feat-card">
+      <div class="feat-num">1</div>
+      <h3>Food Cost Per Dish</h3>
+      <p>Every ingredient, every gram, every shekel. Full product tree including sub-recipes and waste factor. You see exactly where the money goes.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-num">2</div>
+      <h3>Auto Supplier Matching</h3>
+      <p>Updated supplier database with prices. Every product mapped to relevant suppliers with a match score. Always know who's cheapest.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-num">3</div>
+      <h3>WhatsApp Ordering</h3>
+      <p>Send a message, the order goes out. No new app, no system login. Just WhatsApp, which you already know.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-num">4</div>
+      <h3>Smart Alerts</h3>
+      <p>Low stock, price increase, order due. Everything you need to know reaches you before it becomes a problem.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-num">5</div>
+      <h3>Inventory Management</h3>
+      <p>Track what comes in, what goes out, and what's about to run out. Premium tier includes AI-powered demand forecasting.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-num">6</div>
+      <h3>24/7, Every Day</h3>
+      <p>Never sleeps, never takes a vacation, never forgets. Works in the background and updates you only when needed.</p>
+    </div>
+  </div>
+</section>
+
+<div class="demo-section">
+  <div class="section-title" style="text-align:center">Live Example — Food Cost Report</div>
+  <p style="text-align:center; color:rgba(255,255,255,0.5); margin-top:8px; font-size:14px">Steakhouse, 14 dishes, calculated in minutes</p>
+  <table class="demo-table">
+    <thead>
+      <tr><th>Dish</th><th>Price</th><th>Cost</th><th>Food Cost</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Entrecôte 300g</td><td>₪189</td><td>₪68.33</td><td>36.2%</td><td><span class="badge-warn">⚠️ High</span></td></tr>
+      <tr><td>Sirloin 250g</td><td>₪149</td><td>₪42.27</td><td>28.4%</td><td><span class="badge-ok">✅ Good</span></td></tr>
+      <tr><td>House Burger</td><td>₪79</td><td>₪16.80</td><td>21.3%</td><td><span class="badge-ok">✅ Excellent</span></td></tr>
+      <tr><td>Lamb Ribs 400g</td><td>₪159</td><td>₪87.46</td><td>55.0%</td><td><span class="badge-bad">🔴 Problem</span></td></tr>
+      <tr><td>Beef Fillet 250g</td><td>₪179</td><td>₪74.28</td><td>41.5%</td><td><span class="badge-warn">⚠️ High</span></td></tr>
+      <tr><td>Norwegian Salmon</td><td>₪119</td><td>₪31.30</td><td>26.3%</td><td><span class="badge-ok">✅ Good</span></td></tr>
+      <tr><td>Duck Breast</td><td>₪89</td><td>₪40.43</td><td>45.4%</td><td><span class="badge-bad">🔴 Problem</span></td></tr>
+      <tr><td>Green Salad</td><td>₪49</td><td>₪5.18</td><td>10.6%</td><td><span class="badge-ok">✅ Excellent</span></td></tr>
+    </tbody>
+  </table>
+  <div class="demo-note">* Real report generated in 10 minutes from a menu + supplier list</div>
+</div>
+
+<div class="roi-box">
+  <h3>💰 How Much Does It Save?</h3>
+  <p style="color:var(--gray); margin-bottom:20px; font-size:14px">Average restaurant — ₪85,000/month food budget</p>
+  <div class="roi-grid">
+    <div class="roi-item">
+      <div class="label">Inaccurate costing</div>
+      <div class="value">₪2,550</div>
+    </div>
+    <div class="roi-item">
+      <div class="label">No supplier comparison</div>
+      <div class="value">₪6,375</div>
+    </div>
+    <div class="roi-item">
+      <div class="label">Waste & spoilage</div>
+      <div class="value">₪2,250</div>
+    </div>
+    <div class="roi-item">
+      <div class="label">Unnecessary labor hours</div>
+      <div class="value">₪1,600</div>
+    </div>
+  </div>
+  <div class="roi-total">Potential savings: ₪12,775/month</div>
+</div>
+
+<section id="pricing">
+  <div class="section-title">Plans</div>
+  <div class="section-sub">Every plan starts with a free month. No commitment.</div>
+  <div class="pricing-grid">
+
+    <div class="price-card">
+      <div class="price-icon">🥉</div>
+      <h3>Basic</h3>
+      <div class="price-amount">₪990<span>/month</span></div>
+      <div class="price-roi">Avg. savings: ~₪3,000/month</div>
+      <ul class="price-features">
+        <li>Up to 50 dishes</li>
+        <li>Up to 10 suppliers</li>
+        <li>Auto food cost calculation</li>
+        <li>Basic inventory tracking</li>
+        <li>Price alerts</li>
+        <li>Weekly report</li>
+        <li>1-hour onboarding session</li>
+        <li class="no">WhatsApp ordering</li>
+        <li class="no">Supplier comparison</li>
+      </ul>
+      <a href="#" class="price-cta price-cta-outline">Start Free Month</a>
+    </div>
+
+    <div class="price-card featured">
+      <div class="price-badge">⭐ Most Popular</div>
+      <div class="price-icon">🥈</div>
+      <h3>Professional</h3>
+      <div class="price-amount">₪1,990<span>/month</span></div>
+      <div class="price-roi">Avg. savings: ~₪9,000/month</div>
+      <ul class="price-features">
+        <li>Unlimited dishes</li>
+        <li>Up to 30 suppliers</li>
+        <li>Everything in Basic</li>
+        <li>WhatsApp ordering</li>
+        <li>Auto order scheduling</li>
+        <li>Supplier price comparison</li>
+        <li>Low stock alerts</li>
+        <li>Daily report</li>
+        <li>24/7 support</li>
+        <li>2-hour onboarding session</li>
+      </ul>
+      <a href="#" class="price-cta price-cta-primary">Start Free Month</a>
+    </div>
+
+    <div class="price-card">
+      <div class="price-icon">🥇</div>
+      <h3>Premium</h3>
+      <div class="price-amount">₪3,490<span>/month</span></div>
+      <div class="price-roi">Avg. savings: ~₪15,000+/month</div>
+      <ul class="price-features">
+        <li>Everything in Professional</li>
+        <li>Multi-branch (up to 5)</li>
+        <li>API for existing systems</li>
+        <li>Auto-order on low stock</li>
+        <li>AI demand forecasting</li>
+        <li>Dedicated success manager</li>
+        <li>3-hour onboarding + implementation</li>
+      </ul>
+      <a href="#" class="price-cta price-cta-outline">Start Free Month</a>
+    </div>
+
+  </div>
+</section>
+
+<div class="guarantee">
+  <div class="guarantee-icon">🛡️</div>
+  <h3>Zero Risk</h3>
+  <p>First month completely free. No credit card, no commitment.<br>After that, if we didn't save you money — goodbye, no questions asked.<br><strong>And if you paid and weren't satisfied — full money-back guarantee.</strong></p>
+</div>
+
+<div class="footer-cta">
+  <h2>Ready to Stop Guessing?</h2>
+  <p>Send me your menu and supplier list. Within 24 hours you'll get a full food cost report — free.</p>
+  <a href="https://wa.me/972542559886?text=Hi%2C%20I%27d%20like%20to%20learn%20about%20My%20Resto%20Agent">Message on WhatsApp</a>
+  <div class="footer-contact">054-2559886 | Jeremy</div>
+</div>
+
+</body>
+</html>
