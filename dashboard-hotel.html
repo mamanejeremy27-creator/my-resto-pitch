@@ -6,10 +6,18 @@
 <title>דשבורד מלונאות — ניהול מטבחים</title>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--navy:#1A3A5C;--navy-light:#234b73;--navy-dark:#0f2a45;--gold:#C8A45A;--gold-light:#d4b76e;--bg:#0c1929;--card:#142338;--card-hover:#1a2d47;--text:#e8e8e8;--text-muted:#8899aa;--green:#2ecc71;--red:#e74c3c;--orange:#f39c12;--border:rgba(200,164,90,0.15)}
 body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex}
+[data-lucide]{width:20px;height:20px;display:inline-block;vertical-align:middle}
+.kpi-icon [data-lucide]{width:32px;height:32px}
+.sidebar-icon [data-lucide]{width:22px;height:22px}
+.text-green{color:#27AE60}
+.text-yellow{color:#F5A623}
+.text-red{color:#E74C3C}
+.text-gold{color:#C8A45A;fill:#C8A45A}
 /* Sidebar */
 .sidebar{width:240px;background:linear-gradient(180deg,var(--navy-dark),var(--navy));min-height:100vh;position:fixed;right:0;top:0;z-index:100;display:flex;flex-direction:column;border-left:1px solid var(--border)}
 .sidebar-logo{padding:24px 20px;text-align:center;border-bottom:1px solid var(--border)}
@@ -89,18 +97,18 @@ tr:hover td{background:rgba(200,164,90,0.04)}
 
 <aside class="sidebar">
   <div class="sidebar-logo">
-    <h2>🏨 מלון גרנד</h2>
+    <h2><i data-lucide="building-2"></i> מלון גרנד</h2>
     <small>ניהול מטבחים</small>
   </div>
   <nav class="sidebar-nav">
-    <div class="nav-item active" data-section="overview"><span class="icon">📊</span><span>סקירה כללית</span></div>
-    <div class="nav-item" data-section="kitchens"><span class="icon">👨‍🍳</span><span>מטבחים</span></div>
-    <div class="nav-item" data-section="suppliers"><span class="icon">🚛</span><span>ספקים</span></div>
-    <div class="nav-item" data-section="inventory"><span class="icon">📦</span><span>מלאי</span></div>
-    <div class="nav-item" data-section="banquets"><span class="icon">🎉</span><span>בנקטים</span></div>
-    <div class="nav-item" data-section="reports"><span class="icon">📋</span><span>דוחות</span></div>
+    <div class="nav-item active" data-section="overview"><span class="icon sidebar-icon"><i data-lucide="layout-dashboard"></i></span><span>סקירה כללית</span></div>
+    <div class="nav-item" data-section="kitchens"><span class="icon sidebar-icon"><i data-lucide="chef-hat"></i></span><span>מטבחים</span></div>
+    <div class="nav-item" data-section="suppliers"><span class="icon sidebar-icon"><i data-lucide="users"></i></span><span>ספקים</span></div>
+    <div class="nav-item" data-section="inventory"><span class="icon sidebar-icon"><i data-lucide="package"></i></span><span>מלאי</span></div>
+    <div class="nav-item" data-section="banquets"><span class="icon sidebar-icon"><i data-lucide="calendar-check"></i></span><span>בנקטים</span></div>
+    <div class="nav-item" data-section="reports"><span class="icon sidebar-icon"><i data-lucide="file-text"></i></span><span>דוחות</span></div>
   </nav>
-  <div class="sidebar-footer">Powered by Resto-AI © 2026</div>
+  <div class="sidebar-footer">Powered by Resto-AI &copy; 2026</div>
 </aside>
 
 <main class="main">
@@ -112,7 +120,7 @@ tr:hover td{background:rgba(200,164,90,0.04)}
   <!-- ===== 1. OVERVIEW ===== -->
   <div class="section active" id="sec-overview">
     <div class="kpi-row">
-      <div class="kpi"><div class="label">פוד קוסט ממוצע</div><div class="value">26.8%</div><div class="sub">יעד: 28% ✅</div></div>
+      <div class="kpi"><div class="label">פוד קוסט ממוצע</div><div class="value">26.8%</div><div class="sub">יעד: 28% <i data-lucide="check-circle" class="text-green"></i></div></div>
       <div class="kpi"><div class="label">הוצאה חודשית</div><div class="value">468K₪</div><div class="sub">תקציב: 500K₪</div></div>
       <div class="kpi"><div class="label">מטבחים פעילים</div><div class="value">4/6</div><div class="sub">2 בשיפוץ</div></div>
       <div class="kpi"><div class="label">ספקים פעילים</div><div class="value">45</div><div class="sub">10 ראשיים</div></div>
@@ -125,13 +133,13 @@ tr:hover td{background:rgba(200,164,90,0.04)}
       <div style="font-size:12px;color:var(--text-muted)">156 / 200 חדרים תפוסים</div>
     </div>
     <div class="chart-row">
-      <div class="chart-box"><h3>📈 פוד קוסט לפי מטבח — 6 חודשים</h3><canvas id="chartFoodCost"></canvas></div>
-      <div class="chart-box"><h3>📊 הוצאות לפי מטבח</h3><canvas id="chartExpKitchen"></canvas></div>
+      <div class="chart-box"><h3><i data-lucide="trending-up"></i> פוד קוסט לפי מטבח — 6 חודשים</h3><canvas id="chartFoodCost"></canvas></div>
+      <div class="chart-box"><h3><i data-lucide="bar-chart-3"></i> הוצאות לפי מטבח</h3><canvas id="chartExpKitchen"></canvas></div>
     </div>
     <div class="chart-row">
-      <div class="chart-box"><h3>🍩 חלוקה לפי קטגוריות</h3><canvas id="chartCategories"></canvas></div>
+      <div class="chart-box"><h3><i data-lucide="pie-chart"></i> חלוקה לפי קטגוריות</h3><canvas id="chartCategories"></canvas></div>
       <div class="alerts">
-        <h3>🔔 התראות</h3>
+        <h3><i data-lucide="bell"></i> התראות</h3>
         <div class="alert-item"><span class="alert-dot red"></span>רום סרוויס — חריגה בתקציב (+4.3%)</div>
         <div class="alert-item"><span class="alert-dot red"></span>סלמון — מלאי מתחת למינימום (3/5 ק"ג)</div>
         <div class="alert-item"><span class="alert-dot red"></span>שמן זית — מלאי מתחת למינימום (8/10 ליטר)</div>
@@ -145,7 +153,7 @@ tr:hover td{background:rgba(200,164,90,0.04)}
   <div class="section" id="sec-kitchens">
     <div class="cards-grid">
       <div class="kitchen-card">
-        <h3>🍽️ חדר אוכל ראשי</h3>
+        <h3><i data-lucide="utensils-crossed"></i> חדר אוכל ראשי</h3>
         <div class="kitchen-meta">
           <span>תקציב: <strong>200,000₪</strong></span><span>הוצאה: <strong>180,000₪</strong></span>
           <span>פוד קוסט: <strong>28%</strong></span><span>צוות: <strong>שף מיכאל + 4 טבחים</strong></span>
@@ -154,7 +162,7 @@ tr:hover td{background:rgba(200,164,90,0.04)}
         <div class="dish-list"><span class="dish-tag">ריביי 34%</span><span class="dish-tag">פילה דניס 24%</span><span class="dish-tag">רביולי 19%</span><span class="dish-tag">סלמון 29%</span><span class="dish-tag" style="color:var(--red)">צלעות טלה 48%</span></div>
       </div>
       <div class="kitchen-card">
-        <h3>🎊 בנקטים</h3>
+        <h3><i data-lucide="calendar-check"></i> בנקטים</h3>
         <div class="kitchen-meta">
           <span>תקציב: <strong>130,000₪</strong></span><span>הוצאה: <strong>120,000₪</strong></span>
           <span>פוד קוסט: <strong>31%</strong></span><span>אירועים החודש: <strong>8</strong></span>
@@ -162,7 +170,7 @@ tr:hover td{background:rgba(200,164,90,0.04)}
         <div style="font-size:12px;color:var(--text-muted)">צוות: שף דוד + 6 טבחים</div>
       </div>
       <div class="kitchen-card">
-        <h3>🍸 לובי בר</h3>
+        <h3><i data-lucide="wine"></i> לובי בר</h3>
         <div class="kitchen-meta">
           <span>תקציב: <strong>100,000₪</strong></span><span>הוצאה: <strong>95,000₪</strong></span>
           <span>פוד קוסט: <strong>22%</strong></span><span>סוג: <strong>מנות קלות + קוקטיילים</strong></span>
@@ -170,14 +178,14 @@ tr:hover td{background:rgba(200,164,90,0.04)}
         <div style="font-size:12px;color:var(--text-muted)">צוות: שף ליאור + 2 טבחים</div>
       </div>
       <div class="kitchen-card">
-        <h3>🛎️ רום סרוויס</h3>
+        <h3><i data-lucide="concierge-bell"></i> רום סרוויס</h3>
         <div class="kitchen-meta">
-          <span>תקציב: <strong>70,000₪</strong></span><span>הוצאה: <strong class="overbudget">73,000₪ ⚠️ חריגה!</strong></span>
+          <span>תקציב: <strong>70,000₪</strong></span><span>הוצאה: <strong class="overbudget">73,000₪ <i data-lucide="alert-triangle" class="text-yellow"></i> חריגה!</strong></span>
           <span>פוד קוסט: <strong>25%</strong></span><span>צוות: <strong>2 טבחים</strong></span>
         </div>
       </div>
     </div>
-    <div class="chart-row"><div class="chart-box"><h3>📊 תקציב מול הוצאה בפועל</h3><canvas id="chartBudgetVsActual"></canvas></div></div>
+    <div class="chart-row"><div class="chart-box"><h3><i data-lucide="bar-chart-3"></i> תקציב מול הוצאה בפועל</h3><canvas id="chartBudgetVsActual"></canvas></div></div>
   </div>
 
   <!-- ===== 3. SUPPLIERS ===== -->
@@ -189,24 +197,24 @@ tr:hover td{background:rgba(200,164,90,0.04)}
       <div class="kpi"><div class="label">חריגות</div><div class="value" style="color:var(--red)">1</div></div>
     </div>
     <div class="table-wrap">
-      <h3>🚛 רשימת ספקים</h3>
+      <h3><i data-lucide="truck"></i> רשימת ספקים</h3>
       <table>
         <thead><tr><th>ספק</th><th>קטגוריה</th><th>מוצרים</th><th>חוזה מסגרת</th><th>סטטוס</th></tr></thead>
         <tbody>
-          <tr><td>תנובה</td><td>חלב</td><td>85</td><td>✅ עד 06/2026</td><td>תקין</td></tr>
-          <tr><td>שטראוס</td><td>חלב/קפה</td><td>42</td><td>✅ עד 09/2026</td><td>תקין</td></tr>
-          <tr><td>אסם-נסטלה</td><td>יבשים</td><td>65</td><td>✅ עד 03/2026</td><td>⚠️ מתחדש בקרוב</td></tr>
-          <tr><td>ארבעה קצבים</td><td>בשר</td><td>45</td><td>✅ עד 12/2026</td><td>תקין</td></tr>
-          <tr><td>מאסטרפוד</td><td>בשר/דגים</td><td>58</td><td>✅ עד 08/2026</td><td>תקין</td></tr>
-          <tr><td>זנו דגים</td><td>דגים</td><td>61</td><td>❌ בלי חוזה</td><td>⚠️ צריך חוזה</td></tr>
-          <tr><td>הרמס דגים</td><td>דגים</td><td>30</td><td>✅ עד 05/2026</td><td>🔴 איחורים</td></tr>
-          <tr><td>פרי השדה</td><td>ירקות</td><td>75</td><td>❌ שוטף</td><td>תקין</td></tr>
-          <tr><td>זעפרני</td><td>כללי</td><td>90</td><td>✅ עד 07/2026</td><td>תקין</td></tr>
-          <tr><td>קפוא זן</td><td>קפואים</td><td>35</td><td>✅ עד 11/2026</td><td>תקין</td></tr>
+          <tr><td>תנובה</td><td>חלב</td><td>85</td><td><i data-lucide="check-circle" class="text-green"></i> עד 06/2026</td><td>תקין</td></tr>
+          <tr><td>שטראוס</td><td>חלב/קפה</td><td>42</td><td><i data-lucide="check-circle" class="text-green"></i> עד 09/2026</td><td>תקין</td></tr>
+          <tr><td>אסם-נסטלה</td><td>יבשים</td><td>65</td><td><i data-lucide="check-circle" class="text-green"></i> עד 03/2026</td><td><i data-lucide="alert-triangle" class="text-yellow"></i> מתחדש בקרוב</td></tr>
+          <tr><td>ארבעה קצבים</td><td>בשר</td><td>45</td><td><i data-lucide="check-circle" class="text-green"></i> עד 12/2026</td><td>תקין</td></tr>
+          <tr><td>מאסטרפוד</td><td>בשר/דגים</td><td>58</td><td><i data-lucide="check-circle" class="text-green"></i> עד 08/2026</td><td>תקין</td></tr>
+          <tr><td>זנו דגים</td><td>דגים</td><td>61</td><td><i data-lucide="x-circle" class="text-red"></i> בלי חוזה</td><td><i data-lucide="alert-triangle" class="text-yellow"></i> צריך חוזה</td></tr>
+          <tr><td>הרמס דגים</td><td>דגים</td><td>30</td><td><i data-lucide="check-circle" class="text-green"></i> עד 05/2026</td><td><i data-lucide="alert-circle" class="text-red"></i> איחורים</td></tr>
+          <tr><td>פרי השדה</td><td>ירקות</td><td>75</td><td><i data-lucide="x-circle" class="text-red"></i> שוטף</td><td>תקין</td></tr>
+          <tr><td>זעפרני</td><td>כללי</td><td>90</td><td><i data-lucide="check-circle" class="text-green"></i> עד 07/2026</td><td>תקין</td></tr>
+          <tr><td>קפוא זן</td><td>קפואים</td><td>35</td><td><i data-lucide="check-circle" class="text-green"></i> עד 11/2026</td><td>תקין</td></tr>
         </tbody>
       </table>
     </div>
-    <div class="chart-row"><div class="chart-box"><h3>🍩 מוצרים לפי ספק</h3><canvas id="chartSupplierProducts"></canvas></div></div>
+    <div class="chart-row"><div class="chart-box"><h3><i data-lucide="pie-chart"></i> מוצרים לפי ספק</h3><canvas id="chartSupplierProducts"></canvas></div></div>
   </div>
 
   <!-- ===== 4. INVENTORY ===== -->
@@ -219,24 +227,24 @@ tr:hover td{background:rgba(200,164,90,0.04)}
       <button class="filter-btn" data-filter="לובי">לובי</button>
     </div>
     <div class="table-wrap">
-      <h3>📦 מצב מלאי</h3>
+      <h3><i data-lucide="package"></i> מצב מלאי</h3>
       <table id="invTable">
         <thead><tr><th>מוצר</th><th>מטבח</th><th>כמות</th><th>מינימום</th><th>סטטוס</th><th>ספק</th></tr></thead>
         <tbody>
-          <tr data-kitchen="כללי"><td>חלב 3%</td><td>כללי</td><td>80 ליטר</td><td>40 ליטר</td><td>✅</td><td>תנובה</td></tr>
-          <tr data-kitchen="כללי"><td>שמנת מתוקה</td><td>כללי</td><td>25 ליטר</td><td>15 ליטר</td><td>✅</td><td>תנובה</td></tr>
-          <tr data-kitchen="חדר אוכל"><td>אנטריקוט</td><td>חדר אוכל</td><td>18 ק"ג</td><td>8 ק"ג</td><td>✅</td><td>ארבעה קצבים</td></tr>
-          <tr data-kitchen="חדר אוכל"><td>סלמון</td><td>חדר אוכל</td><td style="color:var(--red)">3 ק"ג</td><td>5 ק"ג</td><td>🔴 נמוך</td><td>זנו דגים</td></tr>
-          <tr data-kitchen="חדר אוכל"><td>פילה דניס</td><td>חדר אוכל</td><td>7 ק"ג</td><td>4 ק"ג</td><td>✅</td><td>מאסטרפוד</td></tr>
-          <tr data-kitchen="בנקטים"><td>צלעות טלה</td><td>בנקטים</td><td style="color:var(--orange)">12 ק"ג</td><td>10 ק"ג</td><td>⚠️ קרוב</td><td>ארבעה קצבים</td></tr>
-          <tr data-kitchen="בנקטים"><td>עוף שלם</td><td>בנקטים</td><td>25 ק"ג</td><td>15 ק"ג</td><td>✅</td><td>מאסטרפוד</td></tr>
-          <tr data-kitchen="כללי"><td>ירקות מעורב</td><td>כללי</td><td>30 ק"ג</td><td>20 ק"ג</td><td>✅</td><td>פרי השדה</td></tr>
-          <tr data-kitchen="כללי"><td>שמן זית</td><td>כללי</td><td style="color:var(--red)">8 ליטר</td><td>10 ליטר</td><td>🔴 נמוך</td><td>זעפרני</td></tr>
-          <tr data-kitchen="לובי"><td>קפה</td><td>לובי</td><td>5 ק"ג</td><td>3 ק"ג</td><td>✅</td><td>שטראוס</td></tr>
+          <tr data-kitchen="כללי"><td>חלב 3%</td><td>כללי</td><td>80 ליטר</td><td>40 ליטר</td><td><i data-lucide="check-circle" class="text-green"></i></td><td>תנובה</td></tr>
+          <tr data-kitchen="כללי"><td>שמנת מתוקה</td><td>כללי</td><td>25 ליטר</td><td>15 ליטר</td><td><i data-lucide="check-circle" class="text-green"></i></td><td>תנובה</td></tr>
+          <tr data-kitchen="חדר אוכל"><td>אנטריקוט</td><td>חדר אוכל</td><td>18 ק"ג</td><td>8 ק"ג</td><td><i data-lucide="check-circle" class="text-green"></i></td><td>ארבעה קצבים</td></tr>
+          <tr data-kitchen="חדר אוכל"><td>סלמון</td><td>חדר אוכל</td><td style="color:var(--red)">3 ק"ג</td><td>5 ק"ג</td><td><i data-lucide="alert-circle" class="text-red"></i> נמוך</td><td>זנו דגים</td></tr>
+          <tr data-kitchen="חדר אוכל"><td>פילה דניס</td><td>חדר אוכל</td><td>7 ק"ג</td><td>4 ק"ג</td><td><i data-lucide="check-circle" class="text-green"></i></td><td>מאסטרפוד</td></tr>
+          <tr data-kitchen="בנקטים"><td>צלעות טלה</td><td>בנקטים</td><td style="color:var(--orange)">12 ק"ג</td><td>10 ק"ג</td><td><i data-lucide="alert-triangle" class="text-yellow"></i> קרוב</td><td>ארבעה קצבים</td></tr>
+          <tr data-kitchen="בנקטים"><td>עוף שלם</td><td>בנקטים</td><td>25 ק"ג</td><td>15 ק"ג</td><td><i data-lucide="check-circle" class="text-green"></i></td><td>מאסטרפוד</td></tr>
+          <tr data-kitchen="כללי"><td>ירקות מעורב</td><td>כללי</td><td>30 ק"ג</td><td>20 ק"ג</td><td><i data-lucide="check-circle" class="text-green"></i></td><td>פרי השדה</td></tr>
+          <tr data-kitchen="כללי"><td>שמן זית</td><td>כללי</td><td style="color:var(--red)">8 ליטר</td><td>10 ליטר</td><td><i data-lucide="alert-circle" class="text-red"></i> נמוך</td><td>זעפרני</td></tr>
+          <tr data-kitchen="לובי"><td>קפה</td><td>לובי</td><td>5 ק"ג</td><td>3 ק"ג</td><td><i data-lucide="check-circle" class="text-green"></i></td><td>שטראוס</td></tr>
         </tbody>
       </table>
     </div>
-    <div class="chart-row"><div class="chart-box"><h3>📊 רמות מלאי</h3><canvas id="chartStock"></canvas></div></div>
+    <div class="chart-row"><div class="chart-box"><h3><i data-lucide="bar-chart-3"></i> רמות מלאי</h3><canvas id="chartStock"></canvas></div></div>
   </div>
 
   <!-- ===== 5. BANQUETS ===== -->
@@ -248,42 +256,42 @@ tr:hover td{background:rgba(200,164,90,0.04)}
       <div class="kpi"><div class="label">רווח צפוי</div><div class="value" style="color:var(--green)">196,200₪</div></div>
     </div>
     <div class="table-wrap">
-      <h3>🎉 אירועים קרובים</h3>
+      <h3><i data-lucide="calendar-check"></i> אירועים קרובים</h3>
       <table>
         <thead><tr><th>אירוע</th><th>תאריך</th><th>אורחים</th><th>תפריט</th><th>עלות/אורח</th><th>מחיר/אורח</th><th>רווח גולמי</th><th>סטטוס</th></tr></thead>
         <tbody>
-          <tr><td>חתונה כהן</td><td>22.02</td><td>180</td><td>קוקטייל+ערב</td><td>135₪</td><td>420₪</td><td>68%</td><td>✅ מאושר</td></tr>
-          <tr><td>כנס הייטק</td><td>25.02</td><td>300</td><td>צהריים עסקית</td><td>48₪</td><td>180₪</td><td>73%</td><td>✅ מאושר</td></tr>
-          <tr><td>בר מצווה לוי</td><td>28.02</td><td>120</td><td>ערב חגיגי</td><td>95₪</td><td>320₪</td><td>70%</td><td>⏳ ממתין</td></tr>
-          <tr><td>יום עיון</td><td>02.03</td><td>80</td><td>בוקר+צהריים</td><td>72₪</td><td>250₪</td><td>71%</td><td>⏳ ממתין</td></tr>
-          <tr><td>חתונה אברהם</td><td>08.03</td><td>220</td><td>קוקטייל+ערב</td><td>142₪</td><td>450₪</td><td>68%</td><td>✅ מאושר</td></tr>
+          <tr><td>חתונה כהן</td><td>22.02</td><td>180</td><td>קוקטייל+ערב</td><td>135₪</td><td>420₪</td><td>68%</td><td><i data-lucide="check-circle" class="text-green"></i> מאושר</td></tr>
+          <tr><td>כנס הייטק</td><td>25.02</td><td>300</td><td>צהריים עסקית</td><td>48₪</td><td>180₪</td><td>73%</td><td><i data-lucide="check-circle" class="text-green"></i> מאושר</td></tr>
+          <tr><td>בר מצווה לוי</td><td>28.02</td><td>120</td><td>ערב חגיגי</td><td>95₪</td><td>320₪</td><td>70%</td><td><i data-lucide="clock"></i> ממתין</td></tr>
+          <tr><td>יום עיון</td><td>02.03</td><td>80</td><td>בוקר+צהריים</td><td>72₪</td><td>250₪</td><td>71%</td><td><i data-lucide="clock"></i> ממתין</td></tr>
+          <tr><td>חתונה אברהם</td><td>08.03</td><td>220</td><td>קוקטייל+ערב</td><td>142₪</td><td>450₪</td><td>68%</td><td><i data-lucide="check-circle" class="text-green"></i> מאושר</td></tr>
         </tbody>
       </table>
     </div>
-    <div class="chart-row"><div class="chart-box"><h3>📊 הכנסה צפויה לפי אירוע</h3><canvas id="chartBanquetRev"></canvas></div></div>
+    <div class="chart-row"><div class="chart-box"><h3><i data-lucide="bar-chart-3"></i> הכנסה צפויה לפי אירוע</h3><canvas id="chartBanquetRev"></canvas></div></div>
   </div>
 
   <!-- ===== 6. REPORTS ===== -->
   <div class="section" id="sec-reports">
     <div class="cards-grid">
-      <div class="report-card"><h4>📅 דוח חודשי — פברואר 2026</h4><p>הוצאה: 468K₪ | חיסכון: 85.5K₪ | פוד קוסט: 26.8%</p></div>
-      <div class="report-card"><h4>📊 דוח רבעוני — Q1 2026</h4><p>מגמת ירידה בפוד קוסט — יעד מושג</p></div>
-      <div class="report-card"><h4>📈 דוח שנתי — 2025</h4><p>סה"כ חיסכון: 890,000₪</p></div>
+      <div class="report-card"><h4><i data-lucide="calendar"></i> דוח חודשי — פברואר 2026</h4><p>הוצאה: 468K₪ | חיסכון: 85.5K₪ | פוד קוסט: 26.8%</p></div>
+      <div class="report-card"><h4><i data-lucide="bar-chart-3"></i> דוח רבעוני — Q1 2026</h4><p>מגמת ירידה בפוד קוסט — יעד מושג</p></div>
+      <div class="report-card"><h4><i data-lucide="trending-up"></i> דוח שנתי — 2025</h4><p>סה"כ חיסכון: 890,000₪</p></div>
     </div>
     <div class="table-wrap">
-      <h3>📋 דוחות זמינים</h3>
+      <h3><i data-lucide="file-text"></i> דוחות זמינים</h3>
       <table>
         <thead><tr><th>דוח</th><th>תקופה</th><th>סטטוס</th></tr></thead>
         <tbody>
-          <tr><td>פוד קוסט חודשי</td><td>פברואר 2026</td><td>✅ מוכן</td></tr>
-          <tr><td>השוואת ספקים</td><td>Q1 2026</td><td>✅ מוכן</td></tr>
-          <tr><td>ניתוח בנקטים</td><td>ינואר 2026</td><td>✅ מוכן</td></tr>
-          <tr><td>תחזית צריכה</td><td>מרץ 2026</td><td>⏳ בהכנה</td></tr>
-          <tr><td>דוח שנתי</td><td>2025</td><td>✅ מוכן</td></tr>
+          <tr><td>פוד קוסט חודשי</td><td>פברואר 2026</td><td><i data-lucide="check-circle" class="text-green"></i> מוכן</td></tr>
+          <tr><td>השוואת ספקים</td><td>Q1 2026</td><td><i data-lucide="check-circle" class="text-green"></i> מוכן</td></tr>
+          <tr><td>ניתוח בנקטים</td><td>ינואר 2026</td><td><i data-lucide="check-circle" class="text-green"></i> מוכן</td></tr>
+          <tr><td>תחזית צריכה</td><td>מרץ 2026</td><td><i data-lucide="clock"></i> בהכנה</td></tr>
+          <tr><td>דוח שנתי</td><td>2025</td><td><i data-lucide="check-circle" class="text-green"></i> מוכן</td></tr>
         </tbody>
       </table>
     </div>
-    <div class="chart-row"><div class="chart-box"><h3>📈 מגמת חיסכון חודשי (6 חודשים)</h3><canvas id="chartSavings"></canvas></div></div>
+    <div class="chart-row"><div class="chart-box"><h3><i data-lucide="trending-up"></i> מגמת חיסכון חודשי (6 חודשים)</h3><canvas id="chartSavings"></canvas></div></div>
   </div>
 
 </main>
@@ -294,15 +302,19 @@ const titles = {overview:'סקירה כללית',kitchens:'מטבחים',supplie
 const sectionMap = {overview:'sec-overview',kitchens:'sec-kitchens',suppliers:'sec-suppliers',inventory:'sec-inventory',banquets:'sec-banquets',reports:'sec-reports'};
 let chartsInit = {};
 
+function showSection(sec) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(sectionMap[sec]).classList.add('active');
+  document.getElementById('page-title').textContent = titles[sec];
+  if (!chartsInit[sec]) { initCharts(sec); chartsInit[sec] = true; }
+  lucide.createIcons();
+}
+
 document.querySelectorAll('.nav-item').forEach(n => {
   n.addEventListener('click', () => {
     document.querySelectorAll('.nav-item').forEach(x => x.classList.remove('active'));
     n.classList.add('active');
-    const sec = n.dataset.section;
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.getElementById(sectionMap[sec]).classList.add('active');
-    document.getElementById('page-title').textContent = titles[sec];
-    if (!chartsInit[sec]) { initCharts(sec); chartsInit[sec] = true; }
+    showSection(n.dataset.section);
   });
 });
 
@@ -327,16 +339,13 @@ const months = ['ספט','אוק','נוב','דצמ','ינו','פבר'];
 
 function initCharts(sec) {
   if (sec === 'overview') {
-    // Food cost line
     new Chart(document.getElementById('chartFoodCost'), {type:'line',data:{labels:months,datasets:[
       {label:'חדר אוכל',data:[30,29,28.5,28,27.5,28],borderColor:gold,tension:.3},
       {label:'בנקטים',data:[33,32,31.5,31,31,31],borderColor:'#e67e22',tension:.3},
       {label:'לובי בר',data:[24,23,23,22.5,22,22],borderColor:green,tension:.3},
       {label:'רום סרוויס',data:[27,26,25.5,25,25,25],borderColor:'#3498db',tension:.3}
     ]},options:{responsive:true,plugins:{legend:{position:'bottom'}}}});
-    // Expenses bar
     new Chart(document.getElementById('chartExpKitchen'), {type:'bar',data:{labels:['חדר אוכל','בנקטים','לובי בר','רום סרוויס'],datasets:[{label:'הוצאה (אלפי ₪)',data:[180,120,95,73],backgroundColor:[gold,'#e67e22',green,'#3498db']}]},options:{responsive:true,plugins:{legend:{display:false}}}});
-    // Categories doughnut
     new Chart(document.getElementById('chartCategories'), {type:'doughnut',data:{labels:['בשר','דגים','חלב','ירקות','יבשים','קפואים'],datasets:[{data:[28,18,15,14,13,12],backgroundColor:[red,gold,'#3498db',green,orange,'#9b59b6']}]},options:{responsive:true,plugins:{legend:{position:'bottom'}}}});
   }
   if (sec === 'kitchens') {
@@ -368,6 +377,7 @@ function initCharts(sec) {
 // Init overview charts on load
 initCharts('overview');
 chartsInit.overview = true;
+lucide.createIcons();
 </script>
 </body>
 </html>
