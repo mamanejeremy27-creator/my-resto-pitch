@@ -6,6 +6,7 @@
 <title>בשר ואש — דשבורד מסעדה</title>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#0F0F1A;--card:#1A1A2E;--card2:#16213E;--orange:#E85D26;--orange2:#FF7A45;--text:#E8E8E8;--muted:#8892A4;--green:#2ECC71;--yellow:#F39C12;--red:#E74C3C;--border:#2A2A4A}
@@ -63,18 +64,28 @@ table tr:hover{background:rgba(232,93,38,.05)}
 .summary-box .item{text-align:center}
 .summary-box .item .val{font-size:1.4rem;font-weight:900;color:var(--orange)}
 .summary-box .item .lbl{font-size:.75rem;color:var(--muted)}
+[data-lucide]{width:20px;height:20px;display:inline-block;vertical-align:middle}
+.kpi-icon [data-lucide]{width:32px;height:32px}
+.sidebar-icon [data-lucide]{width:22px;height:22px}
+.sidebar nav a [data-lucide]{width:20px;height:20px}
+.text-green{color:#27AE60}
+.text-yellow{color:#F5A623}
+.text-red{color:#E74C3C}
+.text-gold{color:#F5A623;fill:#F5A623}
+.badge [data-lucide]{width:14px;height:14px}
+.stars-container [data-lucide]{width:16px;height:16px;color:#F39C12;fill:#F39C12}
 @media(max-width:900px){.sidebar{width:60px}.sidebar .logo h2,.sidebar .logo span,.sidebar nav a span{display:none}.sidebar nav a{justify-content:center;padding:14px 0}.main{margin-right:60px;padding:16px}.charts-row{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <aside class="sidebar">
-<div class="logo"><h2>🔥 בשר ואש</h2><span>ניהול מסעדה חכם</span></div>
+<div class="logo"><h2><i data-lucide="flame"></i> בשר ואש</h2><span>ניהול מסעדה חכם</span></div>
 <nav>
-<a data-section="overview" class="active"><span class="icon">📊</span><span>סקירה כללית</span></a>
-<a data-section="foodcost"><span class="icon">🍽️</span><span>פוד קוסט</span></a>
-<a data-section="suppliers"><span class="icon">🚛</span><span>ספקים</span></a>
-<a data-section="inventory"><span class="icon">📦</span><span>מלאי</span></a>
-<a data-section="orders"><span class="icon">🧾</span><span>הזמנות</span></a>
+<a data-section="overview" class="active"><span class="icon"><i data-lucide="layout-dashboard"></i></span><span>סקירה כללית</span></a>
+<a data-section="foodcost"><span class="icon"><i data-lucide="calculator"></i></span><span>פוד קוסט</span></a>
+<a data-section="suppliers"><span class="icon"><i data-lucide="users"></i></span><span>ספקים</span></a>
+<a data-section="inventory"><span class="icon"><i data-lucide="package"></i></span><span>מלאי</span></a>
+<a data-section="orders"><span class="icon"><i data-lucide="shopping-cart"></i></span><span>הזמנות</span></a>
 </nav>
 </aside>
 <main class="main">
@@ -83,27 +94,27 @@ table tr:hover{background:rgba(232,93,38,.05)}
 <div id="overview" class="section active">
 <h1>סקירה כללית — <span>פברואר 2026</span></h1>
 <div class="kpi-row">
-<div class="kpi"><div class="label">פוד קוסט ממוצע</div><div class="value">28%</div><div class="sub">↓ 2.3% מהחודש הקודם</div></div>
-<div class="kpi"><div class="label">סה״כ הוצאות</div><div class="value">82,400₪</div><div class="sub warn">↑ 4.1% מהחודש הקודם</div></div>
+<div class="kpi"><div class="label">פוד קוסט ממוצע</div><div class="value">28%</div><div class="sub"><i data-lucide="trending-down"></i> 2.3% מהחודש הקודם</div></div>
+<div class="kpi"><div class="label">סה״כ הוצאות</div><div class="value">82,400₪</div><div class="sub warn"><i data-lucide="trending-up"></i> 4.1% מהחודש הקודם</div></div>
 <div class="kpi"><div class="label">הזמנות החודש</div><div class="value">47</div><div class="sub">ממוצע 1,753₪ להזמנה</div></div>
-<div class="kpi"><div class="label">חיסכון מצטבר</div><div class="value">12,775₪</div><div class="sub">🎯 מאז ההצטרפות</div></div>
+<div class="kpi"><div class="label">חיסכון מצטבר</div><div class="value">12,775₪</div><div class="sub"><i data-lucide="target"></i> מאז ההצטרפות</div></div>
 </div>
 <div class="charts-row">
-<div class="chart-card"><h3>📈 פוד קוסט — 6 חודשים</h3><canvas id="overviewLine"></canvas></div>
-<div class="chart-card"><h3>🍩 התפלגות הוצאות</h3><canvas id="overviewDoughnut"></canvas></div>
+<div class="chart-card"><h3><i data-lucide="trending-up"></i> פוד קוסט — 6 חודשים</h3><canvas id="overviewLine"></canvas></div>
+<div class="chart-card"><h3><i data-lucide="pie-chart"></i> התפלגות הוצאות</h3><canvas id="overviewDoughnut"></canvas></div>
 </div>
 <div class="table-card">
-<h3>🥩 טבלת פוד קוסט — מנות עיקריות</h3>
+<h3><i data-lucide="utensils"></i> טבלת פוד קוסט — מנות עיקריות</h3>
 <table>
 <thead><tr><th>מנה</th><th>מחיר מכירה</th><th>עלות</th><th>פוד קוסט</th><th>רווח גולמי</th><th>סטטוס</th></tr></thead>
 <tbody>
-<tr><td>אנטריקוט 300g</td><td>189₪</td><td>68.33₪</td><td>36.2%</td><td>120.67₪</td><td><span class="badge warn">⚠️</span></td></tr>
-<tr><td>סינטה 250g</td><td>149₪</td><td>42.27₪</td><td>28.4%</td><td>106.73₪</td><td><span class="badge ok">✅</span></td></tr>
-<tr><td>המבורגר הבית</td><td>79₪</td><td>16.80₪</td><td>21.3%</td><td>62.20₪</td><td><span class="badge ok">✅</span></td></tr>
-<tr><td>צלעות כבש 400g</td><td>159₪</td><td>87.46₪</td><td>55.0%</td><td>71.54₪</td><td><span class="badge bad">🔴</span></td></tr>
-<tr><td>פילה בקר 250g</td><td>179₪</td><td>74.28₪</td><td>41.5%</td><td>104.72₪</td><td><span class="badge warn">⚠️</span></td></tr>
-<tr><td>סלמון נורווגי</td><td>119₪</td><td>31.30₪</td><td>26.3%</td><td>87.70₪</td><td><span class="badge ok">✅</span></td></tr>
-<tr><td>פילה לברק</td><td>129₪</td><td>30.90₪</td><td>23.9%</td><td>98.10₪</td><td><span class="badge ok">✅</span></td></tr>
+<tr><td>אנטריקוט 300g</td><td>189₪</td><td>68.33₪</td><td>36.2%</td><td>120.67₪</td><td><span class="badge warn"><i data-lucide="alert-triangle"></i></span></td></tr>
+<tr><td>סינטה 250g</td><td>149₪</td><td>42.27₪</td><td>28.4%</td><td>106.73₪</td><td><span class="badge ok"><i data-lucide="check-circle"></i></span></td></tr>
+<tr><td>המבורגר הבית</td><td>79₪</td><td>16.80₪</td><td>21.3%</td><td>62.20₪</td><td><span class="badge ok"><i data-lucide="check-circle"></i></span></td></tr>
+<tr><td>צלעות כבש 400g</td><td>159₪</td><td>87.46₪</td><td>55.0%</td><td>71.54₪</td><td><span class="badge bad"><i data-lucide="alert-circle"></i></span></td></tr>
+<tr><td>פילה בקר 250g</td><td>179₪</td><td>74.28₪</td><td>41.5%</td><td>104.72₪</td><td><span class="badge warn"><i data-lucide="alert-triangle"></i></span></td></tr>
+<tr><td>סלמון נורווגי</td><td>119₪</td><td>31.30₪</td><td>26.3%</td><td>87.70₪</td><td><span class="badge ok"><i data-lucide="check-circle"></i></span></td></tr>
+<tr><td>פילה לברק</td><td>129₪</td><td>30.90₪</td><td>23.9%</td><td>98.10₪</td><td><span class="badge ok"><i data-lucide="check-circle"></i></span></td></tr>
 </tbody>
 </table>
 </div>
@@ -121,11 +132,11 @@ table tr:hover{background:rgba(232,93,38,.05)}
 <div class="item"><div class="val">33.5%</div><div class="lbl">ממוצע מנות עיקריות</div></div>
 <div class="item"><div class="val">28%</div><div class="lbl">ממוצע כולל תוספות</div></div>
 <div class="item"><div class="val">14</div><div class="lbl">מנות בתפריט</div></div>
-<div class="item"><div class="val">2</div><div class="lbl">🔴 מעל 45%</div></div>
+<div class="item"><div class="val">2</div><div class="lbl"><i data-lucide="alert-circle" class="text-red"></i> מעל 45%</div></div>
 </div>
-<div class="chart-card full" style="margin-bottom:24px"><h3>📊 פוד קוסט לפי מנה</h3><canvas id="fcBar"></canvas></div>
+<div class="chart-card full" style="margin-bottom:24px"><h3><i data-lucide="bar-chart-3"></i> פוד קוסט לפי מנה</h3><canvas id="fcBar"></canvas></div>
 <div class="table-card">
-<h3>📋 כל המנות</h3>
+<h3><i data-lucide="clipboard-list"></i> כל המנות</h3>
 <table>
 <thead><tr><th>מנה</th><th>מחיר מכירה</th><th>עלות חומרי גלם</th><th>פוד קוסט %</th><th>רווח גולמי</th><th>סטטוס</th></tr></thead>
 <tbody id="fcTable"></tbody>
@@ -139,12 +150,12 @@ table tr:hover{background:rgba(232,93,38,.05)}
 <div class="kpi-row">
 <div class="kpi"><div class="label">ספקים פעילים</div><div class="value">10</div></div>
 <div class="kpi"><div class="label">מוצרים ממופים</div><div class="value">308</div></div>
-<div class="kpi"><div class="label">דירוג ממוצע</div><div class="value">3.9⭐</div></div>
+<div class="kpi"><div class="label">דירוג ממוצע</div><div class="value">3.9 <i data-lucide="star" class="text-gold"></i></div></div>
 </div>
 <div class="charts-row">
-<div class="chart-card"><h3>🍩 מוצרים לפי ספק</h3><canvas id="suppDoughnut"></canvas></div>
+<div class="chart-card"><h3><i data-lucide="pie-chart"></i> מוצרים לפי ספק</h3><canvas id="suppDoughnut"></canvas></div>
 <div class="chart-card" style="display:flex;flex-direction:column;justify-content:center">
-<h3>🏆 טופ ספקים</h3>
+<h3><i data-lucide="trophy"></i> טופ ספקים</h3>
 <div style="margin-top:12px;font-size:.85rem;line-height:2">
 1. איתן מעדני בשר — 72 מוצרים<br>
 2. זנו דגים — 61 מוצרים<br>
@@ -165,9 +176,9 @@ table tr:hover{background:rgba(232,93,38,.05)}
 <div class="kpi"><div class="label">מלאי נמוך</div><div class="value" style="color:var(--red)">2</div><div class="sub bad">צלעות כבש, שמן זית</div></div>
 <div class="kpi"><div class="label">קרוב למינימום</div><div class="value" style="color:var(--yellow)">1</div><div class="sub warn">סלמון</div></div>
 </div>
-<div class="chart-card full" style="margin-bottom:24px"><h3>📊 רמות מלאי</h3><canvas id="invBar"></canvas></div>
+<div class="chart-card full" style="margin-bottom:24px"><h3><i data-lucide="bar-chart-3"></i> רמות מלאי</h3><canvas id="invBar"></canvas></div>
 <div class="table-card">
-<h3>📦 טבלת מלאי</h3>
+<h3><i data-lucide="package"></i> טבלת מלאי</h3>
 <table>
 <thead><tr><th>מוצר</th><th>קטגוריה</th><th>כמות נוכחית</th><th>מינימום</th><th>סטטוס</th><th>ספק</th></tr></thead>
 <tbody id="invTable"></tbody>
@@ -183,19 +194,19 @@ table tr:hover{background:rgba(232,93,38,.05)}
 <div class="kpi"><div class="label">סה״כ</div><div class="value">82,400₪</div></div>
 <div class="kpi"><div class="label">ממוצע להזמנה</div><div class="value">1,753₪</div></div>
 </div>
-<div class="chart-card full" style="margin-bottom:24px"><h3>📈 הזמנות יומיות — 14 ימים אחרונים</h3><canvas id="ordLine"></canvas></div>
+<div class="chart-card full" style="margin-bottom:24px"><h3><i data-lucide="trending-up"></i> הזמנות יומיות — 14 ימים אחרונים</h3><canvas id="ordLine"></canvas></div>
 <div class="table-card">
-<h3>🧾 הזמנות אחרונות</h3>
+<h3><i data-lucide="receipt"></i> הזמנות אחרונות</h3>
 <table>
 <thead><tr><th>#</th><th>תאריך</th><th>ספק</th><th>פריטים</th><th>סכום</th><th>סטטוס</th></tr></thead>
 <tbody>
-<tr><td>47</td><td>18.02</td><td>ארבעה קצבים</td><td>אנטריקוט 15kg, סינטה 10kg</td><td>3,850₪</td><td><span class="badge ok">✅ סופק</span></td></tr>
-<tr><td>46</td><td>17.02</td><td>זנו דגים</td><td>סלמון 8kg, לברק 5kg</td><td>2,120₪</td><td><span class="badge ok">✅ סופק</span></td></tr>
-<tr><td>45</td><td>17.02</td><td>זעפרני</td><td>שמן זית 10L, חומץ 5L</td><td>680₪</td><td><span class="badge warn">⏳ בדרך</span></td></tr>
-<tr><td>44</td><td>16.02</td><td>פרי השדה</td><td>תפו״א 30kg, בצל 20kg, עגבניות 15kg</td><td>890₪</td><td><span class="badge ok">✅ סופק</span></td></tr>
-<tr><td>43</td><td>15.02</td><td>מאסטר מיט</td><td>פילה בקר 12kg</td><td>2,640₪</td><td><span class="badge ok">✅ סופק</span></td></tr>
-<tr><td>42</td><td>14.02</td><td>תנובה</td><td>שמנת 12L, חמאה 5kg, גבינות</td><td>1,250₪</td><td><span class="badge ok">✅ סופק</span></td></tr>
-<tr><td>41</td><td>13.02</td><td>ארבעה קצבים</td><td>צלעות כבש 8kg</td><td>1,760₪</td><td><span class="badge ok">✅ סופק</span></td></tr>
+<tr><td>47</td><td>18.02</td><td>ארבעה קצבים</td><td>אנטריקוט 15kg, סינטה 10kg</td><td>3,850₪</td><td><span class="badge ok"><i data-lucide="check-circle"></i> סופק</span></td></tr>
+<tr><td>46</td><td>17.02</td><td>זנו דגים</td><td>סלמון 8kg, לברק 5kg</td><td>2,120₪</td><td><span class="badge ok"><i data-lucide="check-circle"></i> סופק</span></td></tr>
+<tr><td>45</td><td>17.02</td><td>זעפרני</td><td>שמן זית 10L, חומץ 5L</td><td>680₪</td><td><span class="badge warn"><i data-lucide="clock"></i> בדרך</span></td></tr>
+<tr><td>44</td><td>16.02</td><td>פרי השדה</td><td>תפו״א 30kg, בצל 20kg, עגבניות 15kg</td><td>890₪</td><td><span class="badge ok"><i data-lucide="check-circle"></i> סופק</span></td></tr>
+<tr><td>43</td><td>15.02</td><td>מאסטר מיט</td><td>פילה בקר 12kg</td><td>2,640₪</td><td><span class="badge ok"><i data-lucide="check-circle"></i> סופק</span></td></tr>
+<tr><td>42</td><td>14.02</td><td>תנובה</td><td>שמנת 12L, חמאה 5kg, גבינות</td><td>1,250₪</td><td><span class="badge ok"><i data-lucide="check-circle"></i> סופק</span></td></tr>
+<tr><td>41</td><td>13.02</td><td>ארבעה קצבים</td><td>צלעות כבש 8kg</td><td>1,760₪</td><td><span class="badge ok"><i data-lucide="check-circle"></i> סופק</span></td></tr>
 </tbody>
 </table>
 </div>
@@ -211,6 +222,7 @@ document.querySelectorAll('.sidebar nav a').forEach(a=>{
     a.classList.add('active');
     document.getElementById(a.dataset.section).classList.add('active');
     initCharts();
+    lucide.createIcons();
   });
 });
 
@@ -237,12 +249,12 @@ const dishes=[
   ['פירה תפו״א',25,3.87,15.5,21.13,'ok'],
   ['ירקות גריל',32,4.19,13.1,27.81,'ok'],
 ];
-const statusMap={ok:'✅',warn:'⚠️',bad:'🔴'};
+const statusIcon={ok:'<i data-lucide="check-circle"></i>',warn:'<i data-lucide="alert-triangle"></i>',bad:'<i data-lucide="alert-circle"></i>'};
 
 // FC TABLE
 const fcTb=document.getElementById('fcTable');
 dishes.forEach(d=>{
-  fcTb.innerHTML+=`<tr><td>${d[0]}</td><td>${d[1]}₪</td><td>${d[2]}₪</td><td>${d[3]}%</td><td>${d[4]}₪</td><td><span class="badge ${d[5]}">${statusMap[d[5]]}</span></td></tr>`;
+  fcTb.innerHTML+=`<tr><td>${d[0]}</td><td>${d[1]}₪</td><td>${d[2]}₪</td><td>${d[3]}%</td><td>${d[4]}₪</td><td><span class="badge ${d[5]}">${statusIcon[d[5]]}</span></td></tr>`;
 });
 
 // SUPPLIERS
@@ -260,21 +272,22 @@ const supps=[
 ];
 const sg=document.getElementById('suppGrid');
 supps.forEach(s=>{
-  sg.innerHTML+=`<div class="supplier-card"><div class="name">${s[0]}</div><div class="cat">${s[1]}</div><div class="meta"><span>${s[2]} מוצרים</span><span>${s[3]}</span><span class="stars">${'⭐'.repeat(s[4])}</span></div></div>`;
+  const starsHtml=Array(s[4]).fill('<i data-lucide="star" class="text-gold"></i>').join('');
+  sg.innerHTML+=`<div class="supplier-card"><div class="name">${s[0]}</div><div class="cat">${s[1]}</div><div class="meta"><span>${s[2]} מוצרים</span><span>${s[3]}</span><span class="stars-container">${starsHtml}</span></div></div>`;
 });
 
 // INVENTORY
 const inv=[
-  ['אנטריקוט','בשר',12,5,'ok','✅','ארבעה קצבים'],
-  ['סינטה','בשר',8,5,'ok','✅','מאסטר מיט'],
-  ['צלעות כבש','בשר',3,5,'bad','🔴 נמוך','ארבעה קצבים'],
-  ['פילה בקר','בשר',6,4,'ok','✅','איתן מעדני בשר'],
-  ['סלמון','דגים',4,3,'warn','⚠️ קרוב','זנו דגים'],
-  ['לברק','דגים',5,3,'ok','✅','שוק הדגים'],
-  ['שמן זית','שמנים',2,5,'bad','🔴 נמוך','זעפרני'],
-  ['תפו״א','ירקות',20,10,'ok','✅','פרי השדה'],
-  ['בצל','ירקות',15,8,'ok','✅','פרי השדה'],
-  ['שמנת מתוקה','חלב',6,4,'ok','✅','תנובה'],
+  ['אנטריקוט','בשר',12,5,'ok','<i data-lucide="check-circle"></i>','ארבעה קצבים'],
+  ['סינטה','בשר',8,5,'ok','<i data-lucide="check-circle"></i>','מאסטר מיט'],
+  ['צלעות כבש','בשר',3,5,'bad','<i data-lucide="alert-circle"></i> נמוך','ארבעה קצבים'],
+  ['פילה בקר','בשר',6,4,'ok','<i data-lucide="check-circle"></i>','איתן מעדני בשר'],
+  ['סלמון','דגים',4,3,'warn','<i data-lucide="alert-triangle"></i> קרוב','זנו דגים'],
+  ['לברק','דגים',5,3,'ok','<i data-lucide="check-circle"></i>','שוק הדגים'],
+  ['שמן זית','שמנים',2,5,'bad','<i data-lucide="alert-circle"></i> נמוך','זעפרני'],
+  ['תפו״א','ירקות',20,10,'ok','<i data-lucide="check-circle"></i>','פרי השדה'],
+  ['בצל','ירקות',15,8,'ok','<i data-lucide="check-circle"></i>','פרי השדה'],
+  ['שמנת מתוקה','חלב',6,4,'ok','<i data-lucide="check-circle"></i>','תנובה'],
 ];
 const it=document.getElementById('invTable');
 inv.forEach(i=>{
@@ -312,6 +325,7 @@ function initCharts(){
   }
 }
 initCharts();
+lucide.createIcons();
 </script>
 </body>
 </html>
