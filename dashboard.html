@@ -74,10 +74,45 @@ table tr:hover{background:rgba(232,93,38,.05)}
 .text-gold{color:#F5A623;fill:#F5A623}
 .badge [data-lucide]{width:14px;height:14px}
 .stars-container [data-lucide]{width:16px;height:16px;color:#F39C12;fill:#F39C12}
-@media(max-width:900px){.sidebar{width:60px}.sidebar .logo h2,.sidebar .logo span,.sidebar nav a span{display:none}.sidebar nav a{justify-content:center;padding:14px 0}.main{margin-right:60px;padding:16px}.charts-row{grid-template-columns:1fr}}
+/* === MOBILE BOTTOM NAV === */
+.mobile-hamburger{display:none;position:fixed;top:12px;right:12px;z-index:100;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;cursor:pointer;color:var(--orange)}
+.mobile-hamburger [data-lucide]{width:24px;height:24px}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:49}
+
+@media(max-width:768px){
+  .mobile-hamburger{display:block}
+  .sidebar{transform:translateX(100%);transition:transform .3s ease;width:240px;z-index:50}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-overlay.open{display:block}
+  .main{margin-right:0;padding:14px 12px}
+  h1{font-size:1.25rem;margin-bottom:16px;padding-right:44px}
+  .kpi-row{grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+  .kpi{padding:14px}
+  .kpi .value{font-size:1.4rem}
+  .kpi .label{font-size:.72rem}
+  .kpi .sub{font-size:.68rem}
+  .charts-row{grid-template-columns:1fr;gap:12px;margin-bottom:16px}
+  .chart-card{padding:14px}
+  .chart-card h3{font-size:.85rem;margin-bottom:12px}
+  .table-card{padding:12px;margin-bottom:16px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .table-card table{min-width:540px}
+  table th,table td{padding:8px 10px;font-size:.78rem}
+  .summary-box{gap:16px;padding:14px}
+  .summary-box .item .val{font-size:1.15rem}
+  .supplier-grid{grid-template-columns:1fr;gap:10px}
+  .supplier-card{padding:14px}
+  .alerts .alert{padding:10px 12px;font-size:.8rem}
+  .sidebar nav a{min-height:44px}
+}
+@media(max-width:400px){
+  .kpi-row{grid-template-columns:1fr}
+  .main{padding:10px 8px}
+}
 </style>
 </head>
 <body>
+<button class="mobile-hamburger" onclick="document.querySelector('.sidebar').classList.toggle('open');document.querySelector('.sidebar-overlay').classList.toggle('open')"><i data-lucide="menu"></i></button>
+<div class="sidebar-overlay" onclick="document.querySelector('.sidebar').classList.remove('open');this.classList.remove('open')"></div>
 <aside class="sidebar">
 <div class="logo"><h2><i data-lucide="flame"></i> בשר ואש</h2><span>ניהול מסעדה חכם</span></div>
 <nav>
@@ -223,6 +258,8 @@ document.querySelectorAll('.sidebar nav a').forEach(a=>{
     document.getElementById(a.dataset.section).classList.add('active');
     initCharts();
     lucide.createIcons();
+    document.querySelector('.sidebar').classList.remove('open');
+    document.querySelector('.sidebar-overlay').classList.remove('open');
   });
 });
 
