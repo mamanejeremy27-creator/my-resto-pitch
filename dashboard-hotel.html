@@ -2,7 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>דשבורד מלונאות — ניהול מטבחים</title>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -10,7 +10,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--navy:#1A3A5C;--navy-light:#234b73;--navy-dark:#0f2a45;--gold:#C8A45A;--gold-light:#d4b76e;--bg:#0c1929;--card:#142338;--card-hover:#1a2d47;--text:#e8e8e8;--text-muted:#8899aa;--green:#2ecc71;--red:#e74c3c;--orange:#f39c12;--border:rgba(200,164,90,0.15)}
-body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex}
+body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;padding-bottom:env(safe-area-inset-bottom)}
 [data-lucide]{width:20px;height:20px;display:inline-block;vertical-align:middle}
 .kpi-icon [data-lucide]{width:32px;height:32px}
 .sidebar-icon [data-lucide]{width:22px;height:22px}
@@ -90,7 +90,7 @@ tr:hover td{background:rgba(200,164,90,0.04)}
 .report-card h4{color:var(--gold);margin-bottom:8px}
 .report-card p{color:var(--text-muted);font-size:13px}
 /* Responsive — tablet */
-@media(max-width:900px){.sidebar{width:100%;height:60px;min-height:60px;position:fixed;bottom:0;top:auto;right:0;left:0;flex-direction:row;border-left:none;border-top:1px solid var(--border);z-index:200}.sidebar-logo,.sidebar-footer{display:none}.sidebar-nav{display:flex;flex-direction:row;justify-content:space-around;align-items:center;padding:0;overflow-x:auto;width:100%}.nav-item{flex-direction:column;padding:8px 4px;font-size:10px;gap:2px;min-width:0}.nav-item span:not(.icon){font-size:9px}.main{margin-right:0;padding:16px 12px 120px 12px}.chart-row,.cards-grid{grid-template-columns:1fr}}
+@media(max-width:900px){.sidebar{width:100%;height:60px;min-height:60px;position:fixed;bottom:0;top:auto;right:0;left:0;flex-direction:row;border-left:none;border-top:1px solid var(--border);z-index:200}.sidebar-logo,.sidebar-footer{display:none}.sidebar-nav{display:flex;flex-direction:row;justify-content:space-around;align-items:center;padding:0;overflow-x:auto;width:100%}.nav-item{flex-direction:column;padding:8px 4px;font-size:10px;gap:2px;min-width:0}.nav-item span:not(.icon){font-size:9px}.main{margin-right:0;padding:16px 12px calc(80px + env(safe-area-inset-bottom)) 12px}.chart-row,.cards-grid{grid-template-columns:1fr}}
 
 /* Responsive — mobile */
 @media(max-width:768px){
@@ -104,7 +104,7 @@ tr:hover td{background:rgba(200,164,90,0.04)}
   .sidebar-icon [data-lucide]{width:20px;height:20px}
 
   /* Main content */
-  .main{margin-right:0;padding:16px 12px 120px 12px;min-height:calc(100vh - 60px)}
+  .main{margin-right:0;padding:16px 12px calc(80px + env(safe-area-inset-bottom)) 12px;min-height:calc(100vh - 60px)}
 
   /* Page header */
   .page-header{flex-direction:column;align-items:flex-start;gap:6px;margin-bottom:16px}

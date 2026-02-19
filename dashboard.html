@@ -2,7 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>בשר ואש — דשבורד מסעדה</title>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -10,7 +10,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#0F0F1A;--card:#1A1A2E;--card2:#16213E;--orange:#E85D26;--orange2:#FF7A45;--text:#E8E8E8;--muted:#8892A4;--green:#2ECC71;--yellow:#F39C12;--red:#E74C3C;--border:#2A2A4A}
-body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh}
+body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh;padding-bottom:env(safe-area-inset-bottom)}
 .sidebar{width:220px;background:var(--card);border-left:1px solid var(--border);padding:20px 0;position:fixed;right:0;top:0;height:100vh;display:flex;flex-direction:column;z-index:10}
 .sidebar .logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:12px;text-align:center}
 .sidebar .logo h2{color:var(--orange);font-size:1.3rem;font-weight:900}
@@ -89,7 +89,7 @@ table tr:hover{background:rgba(232,93,38,.05)}
   .sidebar nav a.active{border-right-color:transparent!important;border-top-color:var(--orange)!important}
   .sidebar nav a .icon{margin:0!important}
   .sidebar nav a span:last-child{display:block!important;font-size:9px!important;white-space:nowrap}
-  .main{margin-right:0!important;padding:14px 12px 120px 12px!important}
+  .main{margin-right:0!important;padding:14px 12px calc(80px + env(safe-area-inset-bottom)) 12px!important}
   h1{font-size:1.25rem;margin-bottom:16px}
   .kpi-row{grid-template-columns:repeat(2,1fr)!important;gap:8px;margin-bottom:16px}
   .kpi{padding:12px 10px}
