@@ -9,15 +9,15 @@
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0F0F1A;--card:#1A1A2E;--card2:#16213E;--orange:#E85D26;--orange2:#FF7A45;--text:#E8E8E8;--muted:#8892A4;--green:#2ECC71;--yellow:#F39C12;--red:#E74C3C;--border:#2A2A4A}
+:root{--bg:#1c2330;--card:#2e3a51;--card2:#405172;--orange:#cda843;--orange2:#d8bb6b;--text:#E8E8E8;--muted:#8892A4;--green:#2ECC71;--yellow:#F39C12;--red:#E74C3C;--border:rgba(205,168,67,0.15)}
 body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh;padding-bottom:env(safe-area-inset-bottom)}
 .sidebar{width:220px;background:var(--card);border-left:1px solid var(--border);padding:20px 0;position:fixed;right:0;top:0;height:100vh;display:flex;flex-direction:column;z-index:10}
 .sidebar .logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:12px;text-align:center}
 .sidebar .logo h2{color:var(--orange);font-size:1.3rem;font-weight:900}
 .sidebar .logo span{color:var(--muted);font-size:.75rem}
 .sidebar nav a{display:flex;align-items:center;gap:10px;padding:12px 20px;color:var(--muted);text-decoration:none;font-size:.9rem;transition:all .2s;cursor:pointer;border-right:3px solid transparent}
-.sidebar nav a:hover{color:var(--text);background:rgba(232,93,38,.08)}
-.sidebar nav a.active{color:var(--orange);background:rgba(232,93,38,.12);border-right-color:var(--orange);font-weight:700}
+.sidebar nav a:hover{color:var(--text);background:rgba(205,168,67,.08)}
+.sidebar nav a.active{color:var(--orange);background:rgba(205,168,67,.12);border-right-color:var(--orange);font-weight:700}
 .sidebar nav a .icon{font-size:1.1rem;width:24px;text-align:center}
 .main{margin-right:220px;flex:1;padding:28px 32px;min-height:100vh}
 .section{display:none;animation:fadeIn .3s ease}
@@ -40,7 +40,7 @@ h1 span{color:var(--orange)}
 table{width:100%;border-collapse:collapse;font-size:.85rem}
 table th{background:var(--card2);color:var(--muted);font-weight:500;padding:10px 12px;text-align:right;border-bottom:1px solid var(--border);position:sticky;top:0}
 table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text)}
-table tr:hover{background:rgba(232,93,38,.05)}
+table tr:hover{background:rgba(205,168,67,.05)}
 .table-card{background:var(--card);border-radius:12px;padding:20px;border:1px solid var(--border);margin-bottom:24px;overflow-x:auto}
 .table-card h3{font-size:.95rem;font-weight:700;margin-bottom:16px;color:var(--muted)}
 .badge{padding:2px 8px;border-radius:8px;font-size:.75rem;font-weight:700}
@@ -271,8 +271,8 @@ document.querySelectorAll('.sidebar nav a').forEach(a=>{
   });
 });
 
-const O='#E85D26',O2='#FF7A45',G='#2ECC71',Y='#F39C12',R='#E74C3C',M='#8892A4';
-Chart.defaults.color='#8892A4';Chart.defaults.borderColor='#2A2A4A';Chart.defaults.font.family='Heebo';
+const O='#cda843',O2='#d8bb6b',G='#2ECC71',Y='#F39C12',R='#E74C3C',M='#8892A4';
+Chart.defaults.color='#8892A4';Chart.defaults.borderColor='rgba(205,168,67,0.15)';Chart.defaults.font.family='Heebo';
 
 let charts={};
 function dc(id){if(charts[id]){charts[id].destroy()}}
@@ -344,7 +344,7 @@ function initCharts(){
   // Overview line
   if(document.getElementById('overview').classList.contains('active')){
     dc('ol');
-    charts.ol=new Chart(document.getElementById('overviewLine'),{type:'line',data:{labels:['ספט','אוק','נוב','דצמ','ינו','פבר'],datasets:[{label:'פוד קוסט %',data:[32,31,30.5,29,28.5,28],borderColor:O,backgroundColor:'rgba(232,93,38,.15)',tension:.4,fill:true,pointRadius:5,pointBackgroundColor:O}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:false,min:25,max:35,ticks:{callback:v=>v+'%'}}}}});
+    charts.ol=new Chart(document.getElementById('overviewLine'),{type:'line',data:{labels:['ספט','אוק','נוב','דצמ','ינו','פבר'],datasets:[{label:'פוד קוסט %',data:[32,31,30.5,29,28.5,28],borderColor:O,backgroundColor:'rgba(205,168,67,.15)',tension:.4,fill:true,pointRadius:5,pointBackgroundColor:O}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:false,min:25,max:35,ticks:{callback:v=>v+'%'}}}}});
     dc('od');
     charts.od=new Chart(document.getElementById('overviewDoughnut'),{type:'doughnut',data:{labels:['בשר','דגים','ירקות','שמנים/יבשים','חלב'],datasets:[{data:[38200,18600,8900,9200,7500],backgroundColor:[O,'#3498DB',G,Y,'#9B59B6'],borderWidth:0}]},options:{responsive:true,plugins:{legend:{position:'bottom',rtl:true}}}});
   }
@@ -366,7 +366,7 @@ function initCharts(){
   // Orders line
   if(document.getElementById('orders').classList.contains('active')){
     dc('orl');
-    charts.orl=new Chart(document.getElementById('ordLine'),{type:'line',data:{labels:['5.02','6.02','7.02','8.02','9.02','10.02','11.02','12.02','13.02','14.02','15.02','16.02','17.02','18.02'],datasets:[{label:'סכום הזמנות ₪',data:[2100,0,3200,1800,0,4500,2800,0,1760,1250,2640,890,2800,3850],borderColor:O,backgroundColor:'rgba(232,93,38,.1)',tension:.3,fill:true,pointRadius:4,pointBackgroundColor:O}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:v=>'₪'+v.toLocaleString()}}}}});
+    charts.orl=new Chart(document.getElementById('ordLine'),{type:'line',data:{labels:['5.02','6.02','7.02','8.02','9.02','10.02','11.02','12.02','13.02','14.02','15.02','16.02','17.02','18.02'],datasets:[{label:'סכום הזמנות ₪',data:[2100,0,3200,1800,0,4500,2800,0,1760,1250,2640,890,2800,3850],borderColor:O,backgroundColor:'rgba(205,168,67,.1)',tension:.3,fill:true,pointRadius:4,pointBackgroundColor:O}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:v=>'₪'+v.toLocaleString()}}}}});
   }
 }
 initCharts();
