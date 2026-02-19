@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Fire &amp; Grill — Restaurant Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#1c2330;--card:#2e3a51;--card2:#405172;--orange:#cda843;--orange2:#d8bb6b;--text:#E8E8E8;--muted:#8892A4;--green:#2ECC71;--yellow:#F39C12;--red:#E74C3C;--border:rgba(205,168,67,0.15)}
+body{font-family:'Inter','Heebo',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh;padding-bottom:env(safe-area-inset-bottom)}
+.sidebar{width:220px;background:var(--card);border-right:1px solid var(--border);padding:20px 0;position:fixed;left:0;top:0;height:100vh;display:flex;flex-direction:column;z-index:10}
+.sidebar .logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:12px;text-align:center}
+.sidebar .logo h2{color:var(--orange);font-size:1.3rem;font-weight:900}
+.sidebar .logo span{color:var(--muted);font-size:.75rem}
+.sidebar nav a{display:flex;align-items:center;gap:10px;padding:12px 20px;color:var(--muted);text-decoration:none;font-size:.9rem;transition:all .2s;cursor:pointer;border-left:3px solid transparent}
+.sidebar nav a:hover{color:var(--text);background:rgba(205,168,67,.08)}
+.sidebar nav a.active{color:var(--orange);background:rgba(205,168,67,.12);border-left-color:var(--orange);font-weight:700}
+.sidebar nav a .icon{font-size:1.1rem;width:24px;text-align:center}
+.main{margin-left:220px;flex:1;padding:28px 32px;min-height:100vh}
+.section{display:none;animation:fadeIn .3s ease}
+.section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+h1{font-size:1.6rem;font-weight:900;margin-bottom:24px;color:var(--text)}
+h1 span{color:var(--orange)}
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.kpi{background:var(--card);border-radius:12px;padding:20px;border:1px solid var(--border)}
+.kpi .label{color:var(--muted);font-size:.8rem;margin-bottom:4px}
+.kpi .value{font-size:1.8rem;font-weight:900;color:var(--orange)}
+.kpi .sub{font-size:.75rem;color:var(--green);margin-top:4px}
+.kpi .sub.warn{color:var(--yellow)}
+.kpi .sub.bad{color:var(--red)}
+.charts-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.chart-card{background:var(--card);border-radius:12px;padding:20px;border:1px solid var(--border)}
+.chart-card h3{font-size:.95rem;font-weight:700;margin-bottom:16px;color:var(--muted)}
+.chart-card canvas{max-height:280px}
+.chart-card.full{grid-column:1/-1}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+table th{background:var(--card2);color:var(--muted);font-weight:500;padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);position:sticky;top:0}
+table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text)}
+table tr:hover{background:rgba(205,168,67,.05)}
+.table-card{background:var(--card);border-radius:12px;padding:20px;border:1px solid var(--border);margin-bottom:24px;overflow-x:auto}
+.table-card h3{font-size:.95rem;font-weight:700;margin-bottom:16px;color:var(--muted)}
+.badge{padding:2px 8px;border-radius:8px;font-size:.75rem;font-weight:700}
+.badge.ok{background:rgba(46,204,113,.15);color:var(--green)}
+.badge.warn{background:rgba(243,156,18,.15);color:var(--yellow)}
+.badge.bad{background:rgba(231,76,60,.15);color:var(--red)}
+.alerts{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.alert{background:var(--card);border-radius:10px;padding:14px 18px;border:1px solid var(--border);display:flex;align-items:center;gap:12px;font-size:.85rem}
+.alert .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.alert .dot.red{background:var(--red)}
+.alert .dot.yellow{background:var(--yellow)}
+.alert .dot.green{background:var(--green)}
+.supplier-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:24px}
+.supplier-card{background:var(--card);border-radius:12px;padding:18px;border:1px solid var(--border);transition:border-color .2s}
+.supplier-card:hover{border-color:var(--orange)}
+.supplier-card .name{font-weight:700;font-size:1rem;margin-bottom:4px}
+.supplier-card .cat{color:var(--muted);font-size:.8rem;margin-bottom:8px}
+.supplier-card .meta{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted)}
+.supplier-card .stars{color:var(--yellow)}
+.summary-box{background:var(--card);border-radius:12px;padding:18px;border:1px solid var(--border);margin-bottom:24px;display:flex;gap:32px;flex-wrap:wrap}
+.summary-box .item{text-align:center}
+.summary-box .item .val{font-size:1.4rem;font-weight:900;color:var(--orange)}
+.summary-box .item .lbl{font-size:.75rem;color:var(--muted)}
+[data-lucide]{width:20px;height:20px;display:inline-block;vertical-align:middle}
+.kpi-icon [data-lucide]{width:32px;height:32px}
+.sidebar-icon [data-lucide]{width:22px;height:22px}
+.sidebar nav a [data-lucide]{width:20px;height:20px}
+.text-green{color:#27AE60}
+.text-yellow{color:#F5A623}
+.text-red{color:#E74C3C}
+.text-gold{color:#F5A623;fill:#F5A623}
+.badge [data-lucide]{width:14px;height:14px}
+.stars-container [data-lucide]{width:16px;height:16px;color:#F39C12;fill:#F39C12}
+.mobile-hamburger{display:none;position:fixed;top:12px;left:12px;z-index:100;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;cursor:pointer;color:var(--orange)}
+.mobile-hamburger [data-lucide]{width:24px;height:24px}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:49}
+
+@media(max-width:768px){
+  .mobile-hamburger{display:none!important}
+  .sidebar-overlay{display:none!important}
+  .sidebar{width:100%!important;height:60px!important;min-height:60px!important;max-height:60px!important;position:fixed!important;bottom:0!important;top:auto!important;right:0!important;left:0!important;flex-direction:row!important;border-right:none!important;border-top:1px solid var(--border)!important;z-index:200!important;padding:0!important;overflow:visible!important;transform:none!important;display:flex!important;visibility:visible!important;opacity:1!important}
+  .sidebar .logo{display:none!important}
+  .sidebar nav{display:flex!important;flex-direction:row!important;justify-content:space-around!important;align-items:center!important;width:100%!important;height:100%!important;padding:0!important}
+  .sidebar nav a{flex-direction:column!important;padding:6px 4px!important;font-size:9px!important;gap:2px!important;border-left:none!important;border-top:3px solid transparent!important;justify-content:center!important;align-items:center!important;min-width:0!important}
+  .sidebar nav a.active{border-left-color:transparent!important;border-top-color:var(--orange)!important}
+  .sidebar nav a .icon{margin:0!important}
+  .sidebar nav a span:last-child{display:block!important;font-size:9px!important;white-space:nowrap}
+  .main{margin-left:0!important;padding:14px 12px calc(80px + env(safe-area-inset-bottom)) 12px!important}
+  h1{font-size:1.25rem;margin-bottom:16px}
+  .kpi-row{grid-template-columns:repeat(2,1fr)!important;gap:8px;margin-bottom:16px}
+  .kpi{padding:12px 10px}
+  .kpi .value{font-size:1.2rem}
+  .kpi .label{font-size:.7rem}
+  .kpi .sub{font-size:.65rem}
+  .chart-card canvas{width:100%!important;height:auto!important}
+  .charts-row{grid-template-columns:1fr;gap:12px;margin-bottom:16px}
+  .chart-card{padding:14px}
+  .chart-card h3{font-size:.85rem;margin-bottom:12px}
+  .table-card{padding:12px;margin-bottom:16px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .table-card table{min-width:540px}
+  table th,table td{padding:8px 10px;font-size:.78rem}
+  .summary-box{gap:16px;padding:14px}
+  .summary-box .item .val{font-size:1.15rem}
+  .supplier-grid{grid-template-columns:1fr;gap:10px}
+  .supplier-card{padding:14px}
+  .alerts .alert{padding:10px 12px;font-size:.8rem}
+  .sidebar nav a{min-height:44px}
+}
+@media(max-width:400px){
+  .kpi-row{grid-template-columns:1fr 1fr}
+  .main{padding:10px 8px}
+  .kpi .value{font-size:1.2rem}
+}
+</style>
+</head>
+<body>
+<button class="mobile-hamburger" onclick="document.querySelector('.sidebar').classList.toggle('open');document.querySelector('.sidebar-overlay').classList.toggle('open')"><i data-lucide="menu"></i></button>
+<div class="sidebar-overlay" onclick="document.querySelector('.sidebar').classList.remove('open');this.classList.remove('open')"></div>
+<aside class="sidebar">
+<div class="logo" style="padding:12px 16px 20px;border-bottom:1px solid var(--border);margin-bottom:12px;text-align:center">
+  <img src="logo.png" alt="My Resto" style="max-width:140px;height:auto;margin-bottom:4px">
+</div>
+<nav>
+<a data-section="overview" class="active"><span class="icon"><i data-lucide="layout-dashboard"></i></span><span>Overview</span></a>
+<a data-section="foodcost"><span class="icon"><i data-lucide="calculator"></i></span><span>Food Cost</span></a>
+<a data-section="suppliers"><span class="icon"><i data-lucide="users"></i></span><span>Suppliers</span></a>
+<a data-section="inventory"><span class="icon"><i data-lucide="package"></i></span><span>Inventory</span></a>
+<a data-section="orders"><span class="icon"><i data-lucide="shopping-cart"></i></span><span>Orders</span></a>
+</nav>
+</aside>
+<main class="main">
+
+<!-- ===== 1. OVERVIEW ===== -->
+<div id="overview" class="section active">
+<h1>Overview — <span>February 2026</span></h1>
+<div class="kpi-row">
+<div class="kpi"><div class="label">Avg. Food Cost</div><div class="value">28%</div><div class="sub"><i data-lucide="trending-down"></i> Down 2.3% from last month</div></div>
+<div class="kpi"><div class="label">Total Spend</div><div class="value">$23,540</div><div class="sub warn"><i data-lucide="trending-up"></i> Up 4.1% from last month</div></div>
+<div class="kpi"><div class="label">Orders This Month</div><div class="value">47</div><div class="sub">$501 avg. per order</div></div>
+<div class="kpi"><div class="label">Cumulative Savings</div><div class="value">$3,650</div><div class="sub"><i data-lucide="target"></i> Since onboarding</div></div>
+</div>
+<div class="charts-row">
+<div class="chart-card"><h3><i data-lucide="trending-up"></i> Food Cost — 6-Month Trend</h3><canvas id="overviewLine"></canvas></div>
+<div class="chart-card"><h3><i data-lucide="pie-chart"></i> Spend Breakdown</h3><canvas id="overviewDoughnut"></canvas></div>
+</div>
+<div class="table-card">
+<h3><i data-lucide="utensils"></i> Food Cost — Key Dishes</h3>
+<table>
+<thead><tr><th>Dish</th><th>Menu Price</th><th>Cost</th><th>Food Cost</th><th>Gross Margin</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Ribeye 300g</td><td>$54</td><td>$19.52</td><td>36.2%</td><td>$34.48</td><td><span class="badge warn"><i data-lucide="alert-triangle"></i></span></td></tr>
+<tr><td>NY Strip 250g</td><td>$43</td><td>$12.08</td><td>28.4%</td><td>$30.92</td><td><span class="badge ok"><i data-lucide="check-circle"></i></span></td></tr>
+<tr><td>House Burger</td><td>$23</td><td>$4.80</td><td>21.3%</td><td>$18.20</td><td><span class="badge ok"><i data-lucide="check-circle"></i></span></td></tr>
+<tr><td>Lamb Rack 400g</td><td>$45</td><td>$24.99</td><td>55.0%</td><td>$20.01</td><td><span class="badge bad"><i data-lucide="alert-circle"></i></span></td></tr>
+<tr><td>Beef Tenderloin 250g</td><td>$51</td><td>$21.22</td><td>41.5%</td><td>$29.78</td><td><span class="badge warn"><i data-lucide="alert-triangle"></i></span></td></tr>
+<tr><td>Norwegian Salmon</td><td>$34</td><td>$8.94</td><td>26.3%</td><td>$25.06</td><td><span class="badge ok"><i data-lucide="check-circle"></i></span></td></tr>
+<tr><td>Sea Bass Fillet</td><td>$37</td><td>$8.83</td><td>23.9%</td><td>$28.17</td><td><span class="badge ok"><i data-lucide="check-circle"></i></span></td></tr>
+</tbody>
+</table>
+</div>
+<div class="alerts">
+<div class="alert"><div class="dot red"></div><strong>Lamb Rack</strong> — 55% food cost, well above threshold</div>
+<div class="alert"><div class="dot yellow"></div><strong>Olive Oil</strong> — Running low (2L of 5L remaining)</div>
+<div class="alert"><div class="dot green"></div><strong>PO #45</strong> from Zaafrani — En route</div>
+</div>
+</div>
+
+<!-- ===== 2. FOOD COST ===== -->
+<div id="foodcost" class="section">
+<h1>Food Cost — <span>Dish Analysis</span></h1>
+<div class="summary-box">
+<div class="item"><div class="val">33.5%</div><div class="lbl">Mains Average</div></div>
+<div class="item"><div class="val">28%</div><div class="lbl">Incl. Sides</div></div>
+<div class="item"><div class="val">14</div><div class="lbl">Active Dishes</div></div>
+<div class="item"><div class="val">2</div><div class="lbl"><i data-lucide="alert-circle" class="text-red"></i> Above 45%</div></div>
+</div>
+<div class="chart-card full" style="margin-bottom:24px"><h3><i data-lucide="bar-chart-3"></i> Food Cost by Dish</h3><canvas id="fcBar"></canvas></div>
+<div class="table-card">
+<h3><i data-lucide="clipboard-list"></i> Full Menu</h3>
+<table>
+<thead><tr><th>Dish</th><th>Menu Price</th><th>Ingredient Cost</th><th>Food Cost %</th><th>Gross Margin</th><th>Status</th></tr></thead>
+<tbody id="fcTable"></tbody>
+</table>
+</div>
+</div>
+
+<!-- ===== 3. SUPPLIERS ===== -->
+<div id="suppliers" class="section">
+<h1>Suppliers — <span>Directory &amp; Performance</span></h1>
+<div class="kpi-row">
+<div class="kpi"><div class="label">Active Suppliers</div><div class="value">10</div></div>
+<div class="kpi"><div class="label">Mapped Products</div><div class="value">308</div></div>
+<div class="kpi"><div class="label">Avg. Rating</div><div class="value">3.9 <i data-lucide="star" class="text-gold"></i></div></div>
+</div>
+<div class="charts-row">
+<div class="chart-card"><h3><i data-lucide="pie-chart"></i> Products per Supplier</h3><canvas id="suppDoughnut"></canvas></div>
+<div class="chart-card" style="display:flex;flex-direction:column;justify-content:center">
+<h3><i data-lucide="trophy"></i> Top Suppliers</h3>
+<div style="margin-top:12px;font-size:.85rem;line-height:2">
+1. Eitan Premium Meats — 72 products<br>
+2. Zano Fish — 61 products<br>
+3. Zaafrani — 40 products<br>
+4. Pri HaSade Produce — 35 products<br>
+5. Masterfood — 28 products
+</div>
+</div>
+</div>
+<div class="supplier-grid" id="suppGrid"></div>
+</div>
+
+<!-- ===== 4. INVENTORY ===== -->
+<div id="inventory" class="section">
+<h1>Inventory — <span>Current Levels</span></h1>
+<div class="kpi-row">
+<div class="kpi"><div class="label">Items Tracked</div><div class="value">10</div></div>
+<div class="kpi"><div class="label">Critical Low</div><div class="value" style="color:var(--red)">2</div><div class="sub bad">Lamb Rack, Olive Oil</div></div>
+<div class="kpi"><div class="label">Near Minimum</div><div class="value" style="color:var(--yellow)">1</div><div class="sub warn">Salmon</div></div>
+</div>
+<div class="chart-card full" style="margin-bottom:24px"><h3><i data-lucide="bar-chart-3"></i> Stock Levels</h3><canvas id="invBar"></canvas></div>
+<div class="table-card">
+<h3><i data-lucide="package"></i> Inventory Details</h3>
+<table>
+<thead><tr><th>Product</th><th>Category</th><th>On Hand</th><th>Minimum</th><th>Status</th><th>Supplier</th></tr></thead>
+<tbody id="invTable"></tbody>
+</table>
+</div>
+</div>
+
+<!-- ===== 5. ORDERS ===== -->
+<div id="orders" class="section">
+<h1>Orders — <span>February 2026</span></h1>
+<div class="kpi-row">
+<div class="kpi"><div class="label">Orders This Month</div><div class="value">47</div></div>
+<div class="kpi"><div class="label">Total Spend</div><div class="value">$23,540</div></div>
+<div class="kpi"><div class="label">Avg. per Order</div><div class="value">$501</div></div>
+</div>
+<div class="chart-card full" style="margin-bottom:24px"><h3><i data-lucide="trending-up"></i> Daily Order Volume — Last 14 Days</h3><canvas id="ordLine"></canvas></div>
+<div class="table-card">
+<h3><i data-lucide="receipt"></i> Recent Orders</h3>
+<table>
+<thead><tr><th>#</th><th>Date</th><th>Supplier</th><th>Items</th><th>Amount</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>47</td><td>Feb 18</td><td>Arba Katzavim</td><td>Ribeye 15 kg, NY Strip 10 kg</td><td>$1,100</td><td><span class="badge ok"><i data-lucide="check-circle"></i> Delivered</span></td></tr>
+<tr><td>46</td><td>Feb 17</td><td>Zano Fish</td><td>Salmon 8 kg, Sea Bass 5 kg</td><td>$606</td><td><span class="badge ok"><i data-lucide="check-circle"></i> Delivered</span></td></tr>
+<tr><td>45</td><td>Feb 17</td><td>Zaafrani</td><td>Olive Oil 10 L, Vinegar 5 L</td><td>$194</td><td><span class="badge warn"><i data-lucide="clock"></i> In Transit</span></td></tr>
+<tr><td>44</td><td>Feb 16</td><td>Pri HaSade</td><td>Potatoes 30 kg, Onions 20 kg, Tomatoes 15 kg</td><td>$254</td><td><span class="badge ok"><i data-lucide="check-circle"></i> Delivered</span></td></tr>
+<tr><td>43</td><td>Feb 15</td><td>Master Meat</td><td>Beef Tenderloin 12 kg</td><td>$754</td><td><span class="badge ok"><i data-lucide="check-circle"></i> Delivered</span></td></tr>
+<tr><td>42</td><td>Feb 14</td><td>Tnuva</td><td>Cream 12 L, Butter 5 kg, Cheeses</td><td>$357</td><td><span class="badge ok"><i data-lucide="check-circle"></i> Delivered</span></td></tr>
+<tr><td>41</td><td>Feb 13</td><td>Arba Katzavim</td><td>Lamb Rack 8 kg</td><td>$503</td><td><span class="badge ok"><i data-lucide="check-circle"></i> Delivered</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+
+<script>
+// NAV
+document.querySelectorAll('.sidebar nav a').forEach(a=>{
+  a.addEventListener('click',()=>{
+    document.querySelectorAll('.sidebar nav a').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
+    a.classList.add('active');
+    document.getElementById(a.dataset.section).classList.add('active');
+    initCharts();
+    lucide.createIcons();
+    setTimeout(() => { window.dispatchEvent(new Event('resize')); }, 100);
+    document.querySelector('.sidebar').classList.remove('open');
+    document.querySelector('.sidebar-overlay').classList.remove('open');
+  });
+});
+
+const O='#cda843',O2='#d8bb6b',G='#2ECC71',Y='#F39C12',R='#E74C3C',M='#8892A4';
+Chart.defaults.color='#8892A4';Chart.defaults.borderColor='rgba(205,168,67,0.15)';Chart.defaults.font.family='Inter';
+
+let charts={};
+function dc(id){if(charts[id]){charts[id].destroy()}}
+
+// DATA
+const dishes=[
+  ['Ribeye 300g',54,19.52,36.2,34.48,'warn'],
+  ['NY Strip 250g',43,12.08,28.4,30.92,'ok'],
+  ['House Burger',23,4.80,21.3,18.20,'ok'],
+  ['Lamb Rack 400g',45,24.99,55.0,20.01,'bad'],
+  ['Beef Tenderloin 250g',51,21.22,41.5,29.78,'warn'],
+  ['Norwegian Salmon',34,8.94,26.3,25.06,'ok'],
+  ['Sea Bass Fillet',37,8.83,23.9,28.17,'ok'],
+  ['Grilled Calamari',25,7.99,31.4,17.01,'ok'],
+  ['Tuna Sashimi',23,8.08,35.8,14.92,'warn'],
+  ['Duck Breast',25,11.55,45.4,13.45,'bad'],
+  ['Green Salad',14,1.48,10.6,12.52,'ok'],
+  ['House Fries',8,0.70,8.4,7.30,'ok'],
+  ['Mashed Potatoes',7,1.11,15.5,5.89,'ok'],
+  ['Grilled Vegetables',9,1.20,13.1,7.80,'ok'],
+];
+const statusIcon={ok:'<i data-lucide="check-circle"></i>',warn:'<i data-lucide="alert-triangle"></i>',bad:'<i data-lucide="alert-circle"></i>'};
+
+// FC TABLE
+const fcTb=document.getElementById('fcTable');
+dishes.forEach(d=>{
+  fcTb.innerHTML+=`<tr><td>${d[0]}</td><td>$${d[1]}</td><td>$${d[2]}</td><td>${d[3]}%</td><td>$${d[4]}</td><td><span class="badge ${d[5]}">${statusIcon[d[5]]}</span></td></tr>`;
+});
+
+// SUPPLIERS
+const supps=[
+  ['Arba Katzavim','Meat',16,'+972-54-255-9886',5],
+  ['Masterfood','Meat & Fish',28,'+972-54-255-9886',4],
+  ['Master Meat','Meat',12,'+972-54-255-9886',4],
+  ['Zano Fish','Seafood',61,'+972-54-255-9886',5],
+  ['Fish Market','Seafood',6,'+972-54-255-9886',3],
+  ['Hermes Fish','Seafood',13,'+972-54-255-9886',3],
+  ['Eitan Premium Meats','Meat',72,'+972-54-255-9886',4],
+  ['HaTachana','Meat',25,'+972-54-255-9886',4],
+  ['Pri HaSade','Produce',35,'—',3],
+  ['Zaafrani','General',40,'+972-54-255-9886',4],
+];
+const sg=document.getElementById('suppGrid');
+supps.forEach(s=>{
+  const starsHtml=Array(s[4]).fill('<i data-lucide="star" class="text-gold"></i>').join('');
+  sg.innerHTML+=`<div class="supplier-card"><div class="name">${s[0]}</div><div class="cat">${s[1]}</div><div class="meta"><span>${s[2]} products</span><span>${s[3]}</span><span class="stars-container">${starsHtml}</span></div></div>`;
+});
+
+// INVENTORY
+const inv=[
+  ['Ribeye','Meat',12,5,'ok','<i data-lucide="check-circle"></i>','Arba Katzavim'],
+  ['NY Strip','Meat',8,5,'ok','<i data-lucide="check-circle"></i>','Master Meat'],
+  ['Lamb Rack','Meat',3,5,'bad','<i data-lucide="alert-circle"></i> Low','Arba Katzavim'],
+  ['Beef Tenderloin','Meat',6,4,'ok','<i data-lucide="check-circle"></i>','Eitan Premium Meats'],
+  ['Salmon','Seafood',4,3,'warn','<i data-lucide="alert-triangle"></i> Low','Zano Fish'],
+  ['Sea Bass','Seafood',5,3,'ok','<i data-lucide="check-circle"></i>','Fish Market'],
+  ['Olive Oil','Oils',2,5,'bad','<i data-lucide="alert-circle"></i> Low','Zaafrani'],
+  ['Potatoes','Produce',20,10,'ok','<i data-lucide="check-circle"></i>','Pri HaSade'],
+  ['Onions','Produce',15,8,'ok','<i data-lucide="check-circle"></i>','Pri HaSade'],
+  ['Heavy Cream','Dairy',6,4,'ok','<i data-lucide="check-circle"></i>','Tnuva'],
+];
+const it=document.getElementById('invTable');
+inv.forEach(i=>{
+  it.innerHTML+=`<tr><td>${i[0]}</td><td>${i[1]}</td><td>${i[2]}</td><td>${i[3]}</td><td><span class="badge ${i[4]}">${i[5]}</span></td><td>${i[6]}</td></tr>`;
+});
+
+// CHARTS
+function initCharts(){
+  if(document.getElementById('overview').classList.contains('active')){
+    dc('ol');
+    charts.ol=new Chart(document.getElementById('overviewLine'),{type:'line',data:{labels:['Sep','Oct','Nov','Dec','Jan','Feb'],datasets:[{label:'Food Cost %',data:[32,31,30.5,29,28.5,28],borderColor:O,backgroundColor:'rgba(205,168,67,.15)',tension:.4,fill:true,pointRadius:5,pointBackgroundColor:O}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:false,min:25,max:35,ticks:{callback:v=>v+'%'}}}}});
+    dc('od');
+    charts.od=new Chart(document.getElementById('overviewDoughnut'),{type:'doughnut',data:{labels:['Meat','Seafood','Produce','Oils & Dry','Dairy'],datasets:[{data:[10910,5310,2540,2630,2140],backgroundColor:[O,'#3498DB',G,Y,'#9B59B6'],borderWidth:0}]},options:{responsive:true,plugins:{legend:{position:'bottom'}}}});
+  }
+  if(document.getElementById('foodcost').classList.contains('active')){
+    dc('fb');
+    charts.fb=new Chart(document.getElementById('fcBar'),{type:'bar',data:{labels:dishes.map(d=>d[0]),datasets:[{label:'Food Cost %',data:dishes.map(d=>d[3]),backgroundColor:dishes.map(d=>d[3]>45?R:d[3]>30?Y:G),borderRadius:4}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,max:60,ticks:{callback:v=>v+'%'}}}}});
+  }
+  if(document.getElementById('suppliers').classList.contains('active')){
+    dc('sd');
+    charts.sd=new Chart(document.getElementById('suppDoughnut'),{type:'doughnut',data:{labels:supps.map(s=>s[0]),datasets:[{data:supps.map(s=>s[2]),backgroundColor:[O,'#3498DB',G,Y,'#9B59B6','#1ABC9C','#E67E22','#2980B9','#27AE60','#8E44AD'],borderWidth:0}]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:11}}}}}});
+  }
+  if(document.getElementById('inventory').classList.contains('active')){
+    dc('ib');
+    charts.ib=new Chart(document.getElementById('invBar'),{type:'bar',data:{labels:inv.map(i=>i[0]),datasets:[{label:'On Hand',data:inv.map(i=>i[2]),backgroundColor:inv.map(i=>i[4]==='bad'?R:i[4]==='warn'?Y:G),borderRadius:4},{label:'Minimum',data:inv.map(i=>i[3]),backgroundColor:'rgba(136,146,164,.3)',borderRadius:4}]},options:{responsive:true,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}});
+  }
+  if(document.getElementById('orders').classList.contains('active')){
+    dc('orl');
+    charts.orl=new Chart(document.getElementById('ordLine'),{type:'line',data:{labels:['Feb 5','Feb 6','Feb 7','Feb 8','Feb 9','Feb 10','Feb 11','Feb 12','Feb 13','Feb 14','Feb 15','Feb 16','Feb 17','Feb 18'],datasets:[{label:'Order Total ($)',data:[600,0,914,514,0,1286,800,0,503,357,754,254,800,1100],borderColor:O,backgroundColor:'rgba(205,168,67,.1)',tension:.3,fill:true,pointRadius:4,pointBackgroundColor:O}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:v=>'$'+v.toLocaleString()}}}}});
+  }
+}
+initCharts();
+lucide.createIcons();
+</script>
+</body>
+</html>
