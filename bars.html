@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Resto Agent — השותף הדיגיטלי לבר שלך</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #E85D26;
+  --primary-dark: #C44A1A;
+  --dark: #1A1A2E;
+  --darker: #0F0F1A;
+  --gold: #F5A623;
+  --green: #27AE60;
+  --red: #E74C3C;
+  --gray: #8892A0;
+  --light: #F8F9FA;
+  --card: #FFFFFF;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Heebo', sans-serif;
+  background: var(--light);
+  color: var(--dark);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
+  color: white;
+  padding: 80px 24px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -30%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(232,93,38,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(232,93,38,0.2);
+  color: var(--primary);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+}
+.hero h1 {
+  font-size: clamp(32px, 6vw, 56px);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+.hero h1 span { color: var(--primary); }
+.hero p {
+  font-size: 18px;
+  color: rgba(255,255,255,0.7);
+  max-width: 600px;
+  margin: 0 auto 32px;
+  font-weight: 300;
+}
+.hero-cta {
+  display: inline-block;
+  background: var(--primary);
+  color: white;
+  padding: 14px 36px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+.hero-cta:hover { background: var(--primary-dark); transform: translateY(-2px); }
+.hero-sub {
+  margin-top: 12px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+}
+
+/* SECTIONS */
+section { padding: 60px 24px; max-width: 1000px; margin: 0 auto; }
+.section-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+.section-sub {
+  text-align: center;
+  color: var(--gray);
+  font-size: 16px;
+  margin-bottom: 48px;
+}
+
+/* PAIN POINTS */
+.pain-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+.pain-card {
+  background: white;
+  border-radius: 12px;
+  padding: 28px 24px;
+  text-align: center;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+  transition: transform 0.3s;
+}
+.pain-card:hover { transform: translateY(-4px); }
+.pain-icon { font-size: 40px; margin-bottom: 12px; }
+.pain-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.pain-card p { font-size: 14px; color: var(--gray); }
+.pain-stat {
+  display: inline-block;
+  background: rgba(231,76,60,0.1);
+  color: var(--red);
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+/* FEATURES */
+.feat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.feat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 32px 28px;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+  border-right: 4px solid var(--primary);
+}
+.feat-num {
+  display: inline-block;
+  background: var(--primary);
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 32px;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.feat-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+.feat-card p { font-size: 15px; color: var(--gray); line-height: 1.7; }
+
+/* DEMO PREVIEW */
+.demo-section {
+  background: var(--dark);
+  color: white;
+  border-radius: 16px;
+  padding: 48px 32px;
+  margin: 40px auto;
+  max-width: 900px;
+}
+.demo-section .section-title { color: white; }
+.demo-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 24px;
+  font-size: 14px;
+}
+.demo-table th {
+  background: rgba(255,255,255,0.1);
+  padding: 12px 16px;
+  text-align: right;
+  font-weight: 600;
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.demo-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.badge-ok { background: rgba(39,174,96,0.2); color: #2ECC71; padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+.badge-warn { background: rgba(245,166,35,0.2); color: var(--gold); padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+.badge-bad { background: rgba(231,76,60,0.2); color: #E74C3C; padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+.demo-note {
+  margin-top: 20px;
+  text-align: center;
+  color: rgba(255,255,255,0.5);
+  font-size: 13px;
+}
+
+/* PRICING */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+.price-card {
+  background: white;
+  border-radius: 16px;
+  padding: 36px 28px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+  position: relative;
+  text-align: center;
+}
+.price-card.featured {
+  border: 2px solid var(--primary);
+  transform: scale(1.03);
+}
+.price-badge {
+  position: absolute;
+  top: -12px;
+  right: 50%;
+  transform: translateX(50%);
+  background: var(--primary);
+  color: white;
+  padding: 4px 16px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.price-icon { font-size: 36px; margin-bottom: 8px; }
+.price-card h3 { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+.price-amount {
+  font-size: 42px;
+  font-weight: 900;
+  color: var(--primary);
+  margin: 12px 0 4px;
+}
+.price-amount span { font-size: 16px; font-weight: 400; color: var(--gray); }
+.price-roi {
+  display: inline-block;
+  background: rgba(39,174,96,0.1);
+  color: var(--green);
+  padding: 4px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.price-features { list-style: none; text-align: right; margin: 20px 0; }
+.price-features li {
+  padding: 8px 0;
+  font-size: 14px;
+  border-bottom: 1px solid #F0F0F0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.price-features li::before { content: '✓'; color: var(--green); font-weight: 700; }
+.price-features li.no::before { content: '—'; color: #DDD; }
+.price-cta {
+  display: block;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s;
+}
+.price-cta-primary { background: var(--primary); color: white; }
+.price-cta-outline { border: 2px solid var(--primary); color: var(--primary); background: transparent; }
+.price-cta:hover { transform: translateY(-2px); }
+
+/* ROI */
+.roi-box {
+  background: linear-gradient(135deg, #FFF3E6 0%, #FFEED9 100%);
+  border-radius: 16px;
+  padding: 40px 32px;
+  text-align: center;
+  margin: 40px auto;
+  max-width: 700px;
+}
+.roi-box h3 { font-size: 24px; font-weight: 800; margin-bottom: 24px; }
+.roi-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.roi-item {
+  background: white;
+  border-radius: 10px;
+  padding: 16px;
+}
+.roi-item .label { font-size: 13px; color: var(--gray); margin-bottom: 4px; }
+.roi-item .value { font-size: 24px; font-weight: 800; color: var(--primary); }
+.roi-total {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--green);
+  padding-top: 16px;
+  border-top: 2px dashed rgba(0,0,0,0.1);
+}
+
+/* GUARANTEE */
+.guarantee {
+  text-align: center;
+  padding: 48px 24px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.guarantee-icon { font-size: 56px; margin-bottom: 16px; }
+.guarantee h3 { font-size: 26px; font-weight: 800; margin-bottom: 12px; }
+.guarantee p { font-size: 16px; color: var(--gray); line-height: 1.7; }
+
+/* FOOTER CTA */
+.footer-cta {
+  background: var(--dark);
+  color: white;
+  text-align: center;
+  padding: 60px 24px;
+}
+.footer-cta h2 { font-size: 32px; font-weight: 800; margin-bottom: 12px; }
+.footer-cta p { color: rgba(255,255,255,0.6); margin-bottom: 28px; font-size: 16px; }
+.footer-cta a {
+  display: inline-block;
+  background: var(--primary);
+  color: white;
+  padding: 14px 40px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.footer-contact {
+  margin-top: 20px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.4);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero { padding: 60px 20px 40px; }
+  section { padding: 40px 16px; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .price-card.featured { transform: none; }
+  .roi-grid { grid-template-columns: 1fr; }
+  .demo-table { font-size: 12px; }
+  .demo-table th, .demo-table td { padding: 8px 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🍸 AI לברים</div>
+  <h1>השותף הדיגיטלי<br><span>לבר שלך</span></h1>
+  <p>Pour Cost מדויק, מעקב מלאי בקבוקים, זיהוי shrinkage, והזמנות בוואטסאפ. בלי אפליקציה חדשה, פשוט שותף שלא ישן.</p>
+  <a href="#pricing" class="hero-cta">חודש חינם — בלי התחייבות</a>
+  <div class="hero-sub">תוך 24 שעות תקבל דוח Pour Cost מלא</div>
+</div>
+
+<!-- PAIN POINTS -->
+<section>
+  <div class="section-title">הבעיות שכל בר מכיר</div>
+  <div class="section-sub">ושאף אחד לא פותר</div>
+  <div class="pain-grid">
+    <div class="pain-card">
+      <div class="pain-icon">🫗</div>
+      <h3>Pour Cost עיוור</h3>
+      <p>לא יודע מה העלות האמיתית של כל קוקטייל או דרינק</p>
+      <div class="pain-stat">3-7% מעל היעד = אלפי ₪</div>
+    </div>
+    <div class="pain-card">
+      <div class="pain-icon">📉</div>
+      <h3>Shrinkage לא מזוהה</h3>
+      <p>גניבה, over-pour, שפיכות, complimentary - כל זה נעלם</p>
+      <div class="pain-stat">5-15% מהמלאי נעלם</div>
+    </div>
+    <div class="pain-card">
+      <div class="pain-icon">📞</div>
+      <h3>הזמנות ידניות</h3>
+      <p>התקשרויות לספקים באמצע משמרת, בלי זמן להשוות מחירים</p>
+      <div class="pain-stat">5-10% יותר מדי על אלכוהול</div>
+    </div>
+    <div class="pain-card">
+      <div class="pain-icon">🍾</div>
+      <h3>אין מעקב בקבוקים</h3>
+      <p>לא יודע איזה בקבוק פתוח, איזה ריק, מתי להזמין חדש</p>
+      <div class="pain-stat">מלאי נגמר באמצע שירות</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section>
+  <div class="section-title">מה אני עושה בשבילך</div>
+  <div class="section-sub">כל מה שצריך, במקום אחד</div>
+  <div class="feat-grid">
+    <div class="feat-card">
+      <div class="feat-num">1</div>
+      <h3>Pour Cost Intelligence</h3>
+      <p>עלות תיאורטית מול בפועל לכל דרינק. רואה בדיוק איפה יש הפרשים ואיך לתקן אותם.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-num">2</div>
+      <h3>מעקב מלאי ברמת בקבוק</h3>
+      <p>כל בקבוק - פתוח, סגור, ריק. יודע בדיוק מה יש במלאי ומה צריך להזמין.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-num">3</div>
+      <h3>זיהוי Shrinkage</h3>
+      <p>מזהה ומתריע על גניבה, over-pour, שפיכות. עוזר לצמצם אבדות נסתרות.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-num">4</div>
+      <h3>רכש והשוואת ספקים</h3>
+      <p>מאגר מעודכן של ספקי אלכוהול ומחירים. תמיד יודע מי הכי משתלם לקנות ממנו.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-num">5</div>
+      <h3>הזמנות בוואטסאפ</h3>
+      <p>שולח הודעה, ההזמנה יוצאת. בלי אפליקציה חדשה, פשוט וואטסאפ שאתה כבר מכיר.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-num">6</div>
+      <h3>24/7, כל יום</h3>
+      <p>לא ישן, לא יוצא לחופש, לא שוכח. עובד ברקע כל הזמן ומעדכן אותך רק כשצריך.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO TABLE -->
+<div class="demo-section">
+  <div class="section-title" style="text-align:center">דוגמה חיה — דוח Pour Cost</div>
+  <p style="text-align:center; color:rgba(255,255,255,0.5); margin-top:8px; font-size:14px">בר קוקטיילים, 8 משקאות פופולריים, חישוב תוך דקות</p>
+  <table class="demo-table">
+    <thead>
+      <tr><th>משקה/רוח</th><th>מחיר</th><th>עלות תיאורטית</th><th>Pour Cost תיאורטי</th><th>Pour Cost בפועל</th><th>סטטוס</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Absolut Vodka Shot</td><td>28₪</td><td>5.20₪</td><td>18.6%</td><td>24.1%</td><td><span class="badge-warn">⚠️ over-pour</span></td></tr>
+      <tr><td>Johnnie Walker Black</td><td>38₪</td><td>8.40₪</td><td>22.1%</td><td>28.9%</td><td><span class="badge-bad">🔴 בעיה</span></td></tr>
+      <tr><td>Hendrick's Gin G&T</td><td>44₪</td><td>9.50₪</td><td>21.6%</td><td>25.7%</td><td><span class="badge-warn">⚠️ variance</span></td></tr>
+      <tr><td>Campari Spritz</td><td>42₪</td><td>8.80₪</td><td>21.0%</td><td>22.4%</td><td><span class="badge-ok">✅ טוב</span></td></tr>
+      <tr><td>Mojito (Bacardi)</td><td>48₪</td><td>9.20₪</td><td>19.2%</td><td>26.5%</td><td><span class="badge-bad">🔴 בעיה</span></td></tr>
+      <tr><td>Old Fashioned</td><td>52₪</td><td>12.30₪</td><td>23.7%</td><td>30.1%</td><td><span class="badge-bad">🔴 בעיה</span></td></tr>
+      <tr><td>Macallan 12 (30ml)</td><td>58₪</td><td>14.50₪</td><td>25.0%</td><td>27.6%</td><td><span class="badge-warn">⚠️ קל</span></td></tr>
+      <tr><td>בירה חבית (500ml)</td><td>26₪</td><td>4.80₪</td><td>18.5%</td><td>19.2%</td><td><span class="badge-ok">✅ מצוין</span></td></tr>
+    </tbody>
+  </table>
+  <div class="demo-note">* דוח אמיתי שנוצר תוך 10 דקות מרשימת משקאות + מחירוני ספקים</div>
+</div>
+
+<!-- ROI -->
+<div class="roi-box">
+  <h3>💰 כמה זה חוסך לך?</h3>
+  <p style="color:var(--gray); margin-bottom:20px; font-size:14px">בר עם תקציב משקאות של 120,000₪/חודש</p>
+  <div class="roi-grid">
+    <div class="roi-item">
+      <div class="label">Pour cost variance</div>
+      <div class="value">3,600₪</div>
+    </div>
+    <div class="roi-item">
+      <div class="label">בלי השוואת ספקים</div>
+      <div class="value">8,400₪</div>
+    </div>
+    <div class="roi-item">
+      <div class="label">Shrinkage</div>
+      <div class="value">6,000₪</div>
+    </div>
+    <div class="roi-item">
+      <div class="label">שעות עבודה מיותרות</div>
+      <div class="value">2,400₪</div>
+    </div>
+  </div>
+  <div class="roi-total">חיסכון פוטנציאלי: 20,400₪ לחודש</div>
+</div>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-title">מסלולים</div>
+  <div class="section-sub">כל מסלול מתחיל עם חודש חינם. בלי התחייבות.</div>
+  <div class="pricing-grid">
+
+    <div class="price-card">
+      <div class="price-icon">🥉</div>
+      <h3>בסיסי</h3>
+      <div class="price-amount">790₪<span>/חודש</span></div>
+      <div class="price-roi">חיסכון ממוצע: ~4,000₪/חודש</div>
+      <ul class="price-features">
+        <li>עד 50 משקאות/רוחות</li>
+        <li>עד 8 ספקים</li>
+        <li>Pour Cost אוטומטי</li>
+        <li>מעקב מלאי בסיסי</li>
+        <li>התראות מחירים</li>
+        <li>דוח שבועי</li>
+        <li>סשן onboarding (1 שעה)</li>
+        <li class="no">הזמנות בוואטסאפ</li>
+        <li class="no">זיהוי shrinkage</li>
+      </ul>
+      <a href="#" class="price-cta price-cta-outline">התחל חודש חינם</a>
+    </div>
+
+    <div class="price-card featured">
+      <div class="price-badge">⭐ הכי פופולרי</div>
+      <div class="price-icon">🥈</div>
+      <h3>מקצועי</h3>
+      <div class="price-amount">1,490₪<span>/חודש</span></div>
+      <div class="price-roi">חיסכון ממוצע: ~12,000₪/חודש</div>
+      <ul class="price-features">
+        <li>ללא הגבלת משקאות</li>
+        <li>עד 20 ספקים</li>
+        <li>הכל מהבסיסי</li>
+        <li>הזמנות דרך וואטסאפ</li>
+        <li>זיהוי shrinkage מתקדם</li>
+        <li>השוואת מחירי ספקים</li>
+        <li>מעקב בקבוקים (פתוח/סגור/ריק)</li>
+        <li>התראת מלאי נמוך</li>
+        <li>דוח יומי</li>
+        <li>תמיכה 24/7</li>
+      </ul>
+      <a href="#" class="price-cta price-cta-primary">התחל חודש חינם</a>
+    </div>
+
+    <div class="price-card">
+      <div class="price-icon">🥇</div>
+      <h3>פרימיום</h3>
+      <div class="price-amount">2,490₪<span>/חודש</span></div>
+      <div class="price-roi">חיסכון ממוצע: ~20,000₪+/חודש</div>
+      <ul class="price-features">
+        <li>הכל מהמקצועי</li>
+        <li>מולטי-בר (עד 3 מיקומים)</li>
+        <li>API למערכות קיימות</li>
+        <li>חיבור POS (עתידי)</li>
+        <li>הזמנה אוטומטית כשמלאי נמוך</li>
+        <li>תחזיות צריכה (AI)</li>
+        <li>מנהל הצלחה צמוד</li>
+        <li>onboarding אישי (3 שעות + הטמעה)</li>
+      </ul>
+      <a href="#" class="price-cta price-cta-outline">התחל חודש חינם</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<div class="guarantee">
+  <div class="guarantee-icon">🛡️</div>
+  <h3>אפס סיכון</h3>
+  <p>חודש ראשון חינם לגמרי. בלי כרטיס אשראי, בלי התחייבות.<br>אחרי החודש, אם לא חסכנו לך כסף — להתראות, בלי שאלות.<br><strong>ואם שילמת ולא היית מרוצה — money-back guarantee מלא.</strong></p>
+</div>
+
+<!-- FOOTER CTA -->
+<div class="footer-cta">
+  <h2>מוכן להפסיק לנחש?</h2>
+  <p>תן לי את רשימת המשקאות ורשימת הספקים. תוך 24 שעות תקבל דוח Pour Cost מלא — חינם.</p>
+  <a href="https://wa.me/972542559886?text=היי%2C%20אני%20רוצה%20לשמוע%20על%20My%20Resto%20Agent%20לבר">שלח הודעה בוואטסאפ</a>
+  <div class="footer-contact">054-2559886 | ג'רמי</div>
+</div>
+
+</body>
+</html>
