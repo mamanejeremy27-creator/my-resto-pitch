@@ -3,17 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Resto Agent — השותף הדיגיטלי לבר שלך</title>
+<title>Costara — השותף הדיגיטלי לבר שלך</title>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --primary: #E85D26;
-  --primary-dark: #C44A1A;
-  --dark: #1A1A2E;
-  --darker: #0F0F1A;
-  --gold: #F5A623;
+  --primary: #1A3A5C;
+  --accent: #C8A45A;
+  --accent-dark: #A8863A;
+  --dark: #0D1B2A;
+  --darker: #060F1A;
   --green: #27AE60;
   --red: #E74C3C;
+  --warn: #E8973E;
   --gray: #8892A0;
   --light: #F8F9FA;
   --card: #FFFFFF;
@@ -45,13 +46,19 @@ body {
   right: -30%;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(232,93,38,0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(200,164,90,0.15) 0%, transparent 70%);
   border-radius: 50%;
+}
+.hero-logo {
+  width: 40px;
+  height: auto;
+  margin-bottom: 12px;
+  opacity: 0.9;
 }
 .hero-badge {
   display: inline-block;
-  background: rgba(232,93,38,0.2);
-  color: var(--primary);
+  background: rgba(200,164,90,0.2);
+  color: var(--accent);
   padding: 6px 16px;
   border-radius: 20px;
   font-size: 14px;
@@ -65,7 +72,7 @@ body {
   line-height: 1.15;
   margin-bottom: 16px;
 }
-.hero h1 span { color: var(--primary); }
+.hero h1 span { color: var(--accent); }
 .hero p {
   font-size: 18px;
   color: rgba(255,255,255,0.7);
@@ -75,8 +82,8 @@ body {
 }
 .hero-cta {
   display: inline-block;
-  background: var(--primary);
-  color: white;
+  background: var(--accent);
+  color: var(--dark);
   padding: 14px 36px;
   border-radius: 8px;
   font-size: 18px;
@@ -84,7 +91,7 @@ body {
   text-decoration: none;
   transition: all 0.3s;
 }
-.hero-cta:hover { background: var(--primary-dark); transform: translateY(-2px); }
+.hero-cta:hover { background: var(--accent-dark); transform: translateY(-2px); }
 .hero-sub {
   margin-top: 12px;
   font-size: 14px;
@@ -146,12 +153,12 @@ section { padding: 60px 24px; max-width: 1000px; margin: 0 auto; }
   border-radius: 12px;
   padding: 32px 28px;
   box-shadow: 0 2px 20px rgba(0,0,0,0.06);
-  border-right: 4px solid var(--primary);
+  border-right: 4px solid var(--accent);
 }
 .feat-num {
   display: inline-block;
-  background: var(--primary);
-  color: white;
+  background: var(--accent);
+  color: var(--dark);
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -195,7 +202,7 @@ section { padding: 60px 24px; max-width: 1000px; margin: 0 auto; }
   border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 .badge-ok { background: rgba(39,174,96,0.2); color: #2ECC71; padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; }
-.badge-warn { background: rgba(245,166,35,0.2); color: var(--gold); padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+.badge-warn { background: rgba(200,164,90,0.2); color: var(--accent); padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; }
 .badge-bad { background: rgba(231,76,60,0.2); color: #E74C3C; padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; }
 .demo-note {
   margin-top: 20px;
@@ -220,7 +227,7 @@ section { padding: 60px 24px; max-width: 1000px; margin: 0 auto; }
   text-align: center;
 }
 .price-card.featured {
-  border: 2px solid var(--primary);
+  border: 2px solid var(--accent);
   transform: scale(1.03);
 }
 .price-badge {
@@ -228,8 +235,8 @@ section { padding: 60px 24px; max-width: 1000px; margin: 0 auto; }
   top: -12px;
   right: 50%;
   transform: translateX(50%);
-  background: var(--primary);
-  color: white;
+  background: var(--accent);
+  color: var(--dark);
   padding: 4px 16px;
   border-radius: 12px;
   font-size: 12px;
@@ -240,7 +247,7 @@ section { padding: 60px 24px; max-width: 1000px; margin: 0 auto; }
 .price-amount {
   font-size: 42px;
   font-weight: 900;
-  color: var(--primary);
+  color: var(--accent);
   margin: 12px 0 4px;
 }
 .price-amount span { font-size: 16px; font-weight: 400; color: var(--gray); }
@@ -275,13 +282,13 @@ section { padding: 60px 24px; max-width: 1000px; margin: 0 auto; }
   text-align: center;
   transition: all 0.3s;
 }
-.price-cta-primary { background: var(--primary); color: white; }
+.price-cta-primary { background: var(--accent); color: var(--dark); }
 .price-cta-outline { border: 2px solid var(--primary); color: var(--primary); background: transparent; }
 .price-cta:hover { transform: translateY(-2px); }
 
 /* ROI */
 .roi-box {
-  background: linear-gradient(135deg, #FFF3E6 0%, #FFEED9 100%);
+  background: linear-gradient(135deg, rgba(200,164,90,0.08) 0%, rgba(168,134,58,0.12) 100%);
   border-radius: 16px;
   padding: 40px 32px;
   text-align: center;
@@ -301,7 +308,7 @@ section { padding: 60px 24px; max-width: 1000px; margin: 0 auto; }
   padding: 16px;
 }
 .roi-item .label { font-size: 13px; color: var(--gray); margin-bottom: 4px; }
-.roi-item .value { font-size: 24px; font-weight: 800; color: var(--primary); }
+.roi-item .value { font-size: 24px; font-weight: 800; color: var(--accent); }
 .roi-total {
   font-size: 20px;
   font-weight: 800;
@@ -332,8 +339,8 @@ section { padding: 60px 24px; max-width: 1000px; margin: 0 auto; }
 .footer-cta p { color: rgba(255,255,255,0.6); margin-bottom: 28px; font-size: 16px; }
 .footer-cta a {
   display: inline-block;
-  background: var(--primary);
-  color: white;
+  background: var(--accent);
+  color: var(--dark);
   padding: 14px 40px;
   border-radius: 8px;
   font-size: 18px;
@@ -362,6 +369,7 @@ section { padding: 60px 24px; max-width: 1000px; margin: 0 auto; }
 
 <!-- HERO -->
 <div class="hero">
+  <img src="logo.png" alt="Costara" class="hero-logo">
   <div class="hero-badge">🍸 AI לברים</div>
   <h1>השותף הדיגיטלי<br><span>לבר שלך</span></h1>
   <p>Pour Cost מדויק, מעקב מלאי בקבוקים, זיהוי shrinkage, והזמנות בוואטסאפ. בלי אפליקציה חדשה, פשוט שותף שלא ישן.</p>
@@ -564,7 +572,7 @@ section { padding: 60px 24px; max-width: 1000px; margin: 0 auto; }
 <div class="footer-cta">
   <h2>מוכן להפסיק לנחש?</h2>
   <p>תן לי את רשימת המשקאות ורשימת הספקים. תוך 24 שעות תקבל דוח Pour Cost מלא — חינם.</p>
-  <a href="https://wa.me/972542559886?text=היי%2C%20אני%20רוצה%20לשמוע%20על%20My%20Resto%20Agent%20לבר">שלח הודעה בוואטסאפ</a>
+  <a href="https://wa.me/972542559886?text=היי%2C%20אני%20רוצה%20לשמוע%20על%20Costara%20לבר">שלח הודעה בוואטסאפ</a>
   <div class="footer-contact">054-2559886 | ג'רמי</div>
 </div>
 

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Costara — Bar Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#1c2330;--card:#2e3a51;--card2:#405172;--orange:#cda843;--orange2:#d8bb6b;--text:#E8E8E8;--muted:#8892A4;--green:#2ECC71;--yellow:#F39C12;--red:#E74C3C;--border:rgba(205,168,67,0.15)}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh;padding-bottom:env(safe-area-inset-bottom)}
+.sidebar{width:220px;background:var(--card);border-right:1px solid var(--border);padding:20px 0;position:fixed;left:0;top:0;height:100vh;display:flex;flex-direction:column;z-index:10}
+.sidebar-footer{padding:16px 20px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--text-muted)}
+.sidebar .logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:12px;text-align:center}
+.sidebar .logo h2{color:var(--orange);font-size:1.3rem;font-weight:900}
+.sidebar .logo span{color:var(--muted);font-size:.75rem}
+.sidebar nav a{display:flex;align-items:center;gap:10px;padding:12px 20px;color:var(--muted);text-decoration:none;font-size:.9rem;transition:all .2s;cursor:pointer;border-left:3px solid transparent}
+.sidebar nav a:hover{color:var(--text);background:rgba(205,168,67,.08)}
+.sidebar nav a.active{color:var(--orange);background:rgba(205,168,67,.12);border-left-color:var(--orange);font-weight:700}
+.sidebar nav a .icon{font-size:1.1rem;width:24px;text-align:center}
+.main{margin-left:220px;flex:1;padding:28px 32px;min-height:100vh}
+.section{display:none;animation:fadeIn .3s ease}
+.section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+h1{font-size:1.6rem;font-weight:900;margin-bottom:24px;color:var(--text)}
+h1 span{color:var(--orange)}
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.kpi{background:var(--card);border-radius:12px;padding:20px;border:1px solid var(--border)}
+.kpi .label{color:var(--muted);font-size:.8rem;margin-bottom:4px}
+.kpi .value{font-size:1.8rem;font-weight:900;color:var(--orange)}
+.kpi .sub{font-size:.75rem;color:var(--green);margin-top:4px}
+.kpi .sub.warn{color:var(--yellow)}
+.kpi .sub.bad{color:var(--red)}
+.charts-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.chart-card{background:var(--card);border-radius:12px;padding:20px;border:1px solid var(--border)}
+.chart-card h3{font-size:.95rem;font-weight:700;margin-bottom:16px;color:var(--muted)}
+.chart-card canvas{max-height:280px}
+.chart-card.full{grid-column:1/-1}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+table th{background:var(--card2);color:var(--muted);font-weight:500;padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);position:sticky;top:0}
+table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text)}
+table tr:hover{background:rgba(205,168,67,.05)}
+.table-card{background:var(--card);border-radius:12px;padding:20px;border:1px solid var(--border);margin-bottom:24px;overflow-x:auto}
+.table-card h3{font-size:.95rem;font-weight:700;margin-bottom:16px;color:var(--muted)}
+.badge{padding:2px 8px;border-radius:8px;font-size:.75rem;font-weight:700}
+.badge.ok{background:rgba(46,204,113,.15);color:var(--green)}
+.badge.warn{background:rgba(243,156,18,.15);color:var(--yellow)}
+.badge.bad{background:rgba(231,76,60,.15);color:var(--red)}
+.alerts{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.alert{background:var(--card);border-radius:10px;padding:14px 18px;border:1px solid var(--border);display:flex;align-items:center;gap:12px;font-size:.85rem}
+.alert .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.alert .dot.red{background:var(--red)}
+.alert .dot.yellow{background:var(--yellow)}
+.alert .dot.green{background:var(--green)}
+.supplier-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:24px}
+.supplier-card{background:var(--card);border-radius:12px;padding:18px;border:1px solid var(--border);transition:border-color .2s}
+.supplier-card:hover{border-color:var(--orange)}
+.supplier-card .name{font-weight:700;font-size:1rem;margin-bottom:4px}
+.supplier-card .cat{color:var(--muted);font-size:.8rem;margin-bottom:8px}
+.supplier-card .meta{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted)}
+.supplier-card .stars{color:var(--yellow)}
+.summary-box{background:var(--card);border-radius:12px;padding:18px;border:1px solid var(--border);margin-bottom:24px;display:flex;gap:32px;flex-wrap:wrap}
+.summary-box .item{text-align:center}
+.summary-box .item .val{font-size:1.4rem;font-weight:900;color:var(--orange)}
+.summary-box .item .lbl{font-size:.75rem;color:var(--muted)}
+[data-lucide]{width:20px;height:20px;display:inline-block;vertical-align:middle}
+.kpi-icon [data-lucide]{width:32px;height:32px}
+.sidebar-icon [data-lucide]{width:22px;height:22px}
+.sidebar nav a [data-lucide]{width:20px;height:20px}
+.text-green{color:#27AE60}
+.text-yellow{color:#F5A623}
+.text-red{color:#E74C3C}
+.text-gold{color:#F5A623;fill:#F5A623}
+.badge [data-lucide]{width:14px;height:14px}
+.stars-container [data-lucide]{width:16px;height:16px;color:#F39C12;fill:#F39C12}
+/* === MOBILE BOTTOM NAV === */
+.mobile-hamburger{display:none;position:fixed;top:12px;left:12px;z-index:100;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;cursor:pointer;color:var(--orange)}
+.mobile-hamburger [data-lucide]{width:24px;height:24px}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:49}
+
+@media(max-width:768px){
+  .mobile-hamburger{display:none!important}
+  .sidebar-overlay{display:none!important}
+  .sidebar{width:100%!important;height:60px!important;min-height:60px!important;max-height:60px!important;position:fixed!important;bottom:0!important;top:auto!important;left:0!important;right:0!important;flex-direction:row!important;border-right:none!important;border-top:1px solid var(--border)!important;z-index:200!important;padding:0!important;overflow:visible!important;transform:none!important;display:flex!important;visibility:visible!important;opacity:1!important}
+  .sidebar .logo{display:none!important}
+  .sidebar nav{display:flex!important;flex-direction:row!important;justify-content:space-around!important;align-items:center!important;width:100%!important;height:100%!important;padding:0!important}
+  .sidebar nav a{flex-direction:column!important;padding:6px 4px!important;font-size:9px!important;gap:2px!important;border-left:none!important;border-top:3px solid transparent!important;justify-content:center!important;align-items:center!important;min-width:0!important}
+  .sidebar nav a.active{border-left-color:transparent!important;border-top-color:var(--orange)!important}
+  .sidebar nav a .icon{margin:0!important}
+  .sidebar nav a span:last-child{display:block!important;font-size:9px!important;white-space:nowrap}
+  .main{margin-left:0!important;padding:14px 12px calc(80px + env(safe-area-inset-bottom)) 12px!important}
+  h1{font-size:1.25rem;margin-bottom:16px}
+  .kpi-row{grid-template-columns:repeat(2,1fr)!important;gap:8px;margin-bottom:16px}
+  .kpi{padding:12px 10px}
+  .kpi .value{font-size:1.2rem}
+  .kpi .label{font-size:.7rem}
+  .kpi .sub{font-size:.65rem}
+  .chart-card canvas{width:100%!important;height:auto!important}
+  .charts-row{grid-template-columns:1fr;gap:12px;margin-bottom:16px}
+  .chart-card{padding:14px}
+  .chart-card h3{font-size:.85rem;margin-bottom:12px}
+  .table-card{padding:12px;margin-bottom:16px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .table-card table{min-width:540px}
+  table th,table td{padding:8px 10px;font-size:.78rem}
+  .summary-box{gap:16px;padding:14px}
+  .summary-box .item .val{font-size:1.15rem}
+  .supplier-grid{grid-template-columns:1fr;gap:10px}
+  .supplier-card{padding:14px}
+  .alerts .alert{padding:10px 12px;font-size:.8rem}
+  .sidebar nav a{min-height:44px}
+}
+@media(max-width:400px){
+  .kpi-row{grid-template-columns:1fr 1fr}
+  .main{padding:10px 8px}
+  .kpi .value{font-size:1.2rem}
+}
+</style>
+</head>
+<body>
+<button class="mobile-hamburger" onclick="document.querySelector('.sidebar').classList.toggle('open');document.querySelector('.sidebar-overlay').classList.toggle('open')"><i data-lucide="menu"></i></button>
+<div class="sidebar-overlay" onclick="document.querySelector('.sidebar').classList.remove('open');this.classList.remove('open')"></div>
+<aside class="sidebar">
+<div class="logo" style="padding:12px 16px 20px;border-bottom:1px solid var(--border);margin-bottom:12px;text-align:center">
+  <img src="logo.png" alt="Costara" style="max-width:140px;height:auto;margin-bottom:4px">
+</div>
+<nav>
+<a data-section="overview" class="active"><span class="icon"><i data-lucide="layout-dashboard"></i></span><span>Overview</span></a>
+<a data-section="pourcost"><span class="icon"><i data-lucide="calculator"></i></span><span>Pour Cost</span></a>
+<a data-section="suppliers"><span class="icon"><i data-lucide="users"></i></span><span>Suppliers</span></a>
+<a data-section="inventory"><span class="icon"><i data-lucide="wine"></i></span><span>Bottle Inventory</span></a>
+<a data-section="orders"><span class="icon"><i data-lucide="shopping-cart"></i></span><span>Orders</span></a>
+</nav>
+  <div class="sidebar-footer">Powered by Costara &copy; 2026</div>
+</aside>
+<main class="main">
+
+<!-- ===== 1. OVERVIEW ===== -->
+<div id="overview" class="section active">
+<h1>Overview — <span>February 2026</span></h1>
+<div class="kpi-row">
+<div class="kpi"><div class="label">Average Pour Cost</div><div class="value">22%</div><div class="sub"><i data-lucide="trending-down"></i> 4% from last month</div></div>
+<div class="kpi"><div class="label">Total Beverage Costs</div><div class="value">$31,800</div><div class="sub warn"><i data-lucide="trending-up"></i> 3.2% from last month</div></div>
+<div class="kpi"><div class="label">Monthly Orders</div><div class="value">32</div><div class="sub">Average $994 per order</div></div>
+<div class="kpi"><div class="label">Total Savings</div><div class="value">$2,400</div><div class="sub"><i data-lucide="target"></i> Since joining</div></div>
+</div>
+<div class="charts-row">
+<div class="chart-card"><h3><i data-lucide="trending-up"></i> Pour Cost — 6 Months</h3><canvas id="overviewLine"></canvas></div>
+<div class="chart-card"><h3><i data-lucide="pie-chart"></i> Cost Distribution</h3><canvas id="overviewDoughnut"></canvas></div>
+</div>
+<div class="table-card">
+<h3><i data-lucide="wine"></i> Pour Cost Table — Spirits</h3>
+<table>
+<thead><tr><th>Spirit</th><th>Theoretical Pour Cost</th><th>Actual Pour Cost</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Absolut Vodka</td><td>18%</td><td>24%</td><td><span class="badge warn"><i data-lucide="alert-triangle"></i></span></td></tr>
+<tr><td>Johnnie Walker Black</td><td>20%</td><td>27%</td><td><span class="badge warn"><i data-lucide="alert-triangle"></i></span></td></tr>
+<tr><td>Hendrick's Gin</td><td>19%</td><td>23%</td><td><span class="badge warn"><i data-lucide="alert-triangle"></i></span></td></tr>
+<tr><td>Campari</td><td>17%</td><td>21%</td><td><span class="badge warn"><i data-lucide="alert-triangle"></i></span></td></tr>
+<tr><td>Bacardi White</td><td>16%</td><td>22%</td><td><span class="badge warn"><i data-lucide="alert-triangle"></i></span></td></tr>
+<tr><td>Jack Daniel's</td><td>21%</td><td>28%</td><td><span class="badge warn"><i data-lucide="alert-triangle"></i></span></td></tr>
+<tr><td>Grey Goose</td><td>22%</td><td>26%</td><td><span class="badge warn"><i data-lucide="alert-triangle"></i></span></td></tr>
+<tr><td>Patron Silver</td><td>24%</td><td>31%</td><td><span class="badge bad"><i data-lucide="alert-circle"></i></span></td></tr>
+</tbody>
+</table>
+</div>
+<div class="alerts">
+<div class="alert"><div class="dot red"></div><strong>Patron Silver</strong> — Variance 7%, above threshold</div>
+<div class="alert"><div class="dot yellow"></div><strong>Johnnie Walker Black</strong> — Low stock (1 bottle out of 3)</div>
+<div class="alert"><div class="dot green"></div><strong>Order #32</strong> from Schneller — Delivered</div>
+</div>
+</div>
+
+<!-- ===== 2. POUR COST ===== -->
+<div id="pourcost" class="section">
+<h1>Pour Cost — <span>Spirits Analysis</span></h1>
+<div class="summary-box">
+<div class="item"><div class="val">19.6%</div><div class="lbl">Theoretical Average</div></div>
+<div class="item"><div class="val">25.3%</div><div class="lbl">Actual Average</div></div>
+<div class="item"><div class="val">5.7%</div><div class="lbl">Variance</div></div>
+<div class="item"><div class="val">2</div><div class="lbl"><i data-lucide="alert-circle" class="text-red"></i> Above 7% Variance</div></div>
+</div>
+<div class="chart-card full" style="margin-bottom:24px"><h3><i data-lucide="bar-chart-3"></i> Theoretical vs Actual Pour Cost</h3><canvas id="pcBar"></canvas></div>
+<div class="table-card">
+<h3><i data-lucide="clipboard-list"></i> All Spirits</h3>
+<table>
+<thead><tr><th>Spirit</th><th>Theoretical %</th><th>Actual %</th><th>Variance %</th><th>Status</th></tr></thead>
+<tbody id="pcTable"></tbody>
+</table>
+</div>
+</div>
+
+<!-- ===== 3. SUPPLIERS ===== -->
+<div id="suppliers" class="section">
+<h1>Suppliers — <span>Management & Tracking</span></h1>
+<div class="kpi-row">
+<div class="kpi"><div class="label">Active Suppliers</div><div class="value">6</div></div>
+<div class="kpi"><div class="label">Mapped Products</div><div class="value">85</div></div>
+<div class="kpi"><div class="label">Average Rating</div><div class="value">4.1 <i data-lucide="star" class="text-gold"></i></div></div>
+</div>
+<div class="charts-row">
+<div class="chart-card"><h3><i data-lucide="pie-chart"></i> Products by Supplier</h3><canvas id="suppDoughnut"></canvas></div>
+<div class="chart-card" style="display:flex;flex-direction:column;justify-content:center">
+<h3><i data-lucide="trophy"></i> Top Suppliers</h3>
+<div style="margin-top:12px;font-size:.85rem;line-height:2">
+1. Schneller Beverages — 32 products<br>
+2. Alcobar — 20 products<br>
+3. Tap Beer Co. — 15 products<br>
+4. Diageo Israel — 8 products<br>
+5. Pernod Ricard — 6 products
+</div>
+</div>
+</div>
+<div class="supplier-grid" id="suppGrid"></div>
+</div>
+
+<!-- ===== 4. INVENTORY ===== -->
+<div id="inventory" class="section">
+<h1>Bottle Inventory — <span>Current Status</span></h1>
+<div class="kpi-row">
+<div class="kpi"><div class="label">Tracked Items</div><div class="value">85</div></div>
+<div class="kpi"><div class="label">Low Stock</div><div class="value" style="color:var(--red)">4</div><div class="sub bad">Johnnie Walker, Grey Goose, etc.</div></div>
+<div class="kpi"><div class="label">Near Minimum</div><div class="value" style="color:var(--yellow)">2</div><div class="sub warn">Bacardi, Hendrick's</div></div>
+</div>
+<div class="chart-card full" style="margin-bottom:24px"><h3><i data-lucide="bar-chart-3"></i> Bottle Stock Levels</h3><canvas id="invBar"></canvas></div>
+<div class="table-card">
+<h3><i data-lucide="wine"></i> Inventory Table</h3>
+<table>
+<thead><tr><th>Product</th><th>Category</th><th>Unopened Bottles</th><th>Open</th><th>Minimum</th><th>Status</th><th>Supplier</th></tr></thead>
+<tbody id="invTable"></tbody>
+</table>
+</div>
+</div>
+
+<!-- ===== 5. ORDERS ===== -->
+<div id="orders" class="section">
+<h1>Orders — <span>February 2026</span></h1>
+<div class="kpi-row">
+<div class="kpi"><div class="label">Monthly Orders</div><div class="value">32</div></div>
+<div class="kpi"><div class="label">Total</div><div class="value">$31,800</div></div>
+<div class="kpi"><div class="label">Average per Order</div><div class="value">$994</div></div>
+</div>
+<div class="chart-card full" style="margin-bottom:24px"><h3><i data-lucide="trending-up"></i> Daily Orders — Last 14 Days</h3><canvas id="ordLine"></canvas></div>
+<div class="table-card">
+<h3><i data-lucide="receipt"></i> Recent Orders</h3>
+<table>
+<thead><tr><th>#</th><th>Date</th><th>Supplier</th><th>Items</th><th>Amount</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>32</td><td>18.02</td><td>Schneller Beverages</td><td>Absolut Vodka x6, Jack Daniel's x4</td><td>$1,140</td><td><span class="badge ok"><i data-lucide="check-circle"></i> Delivered</span></td></tr>
+<tr><td>31</td><td>17.02</td><td>Alcobar</td><td>White Wine x12, Red Wine x8</td><td>$988</td><td><span class="badge ok"><i data-lucide="check-circle"></i> Delivered</span></td></tr>
+<tr><td>30</td><td>16.02</td><td>Tap Beer Co.</td><td>Stella Keg x2, Corona Keg x1</td><td>$575</td><td><span class="badge warn"><i data-lucide="clock"></i> In Transit</span></td></tr>
+<tr><td>29</td><td>15.02</td><td>Diageo Israel</td><td>Johnnie Walker Black x3, Tanqueray x2</td><td>$1,044</td><td><span class="badge ok"><i data-lucide="check-circle"></i> Delivered</span></td></tr>
+<tr><td>28</td><td>14.02</td><td>Pernod Ricard</td><td>Chivas Regal x2, Jameson x3</td><td>$1,275</td><td><span class="badge ok"><i data-lucide="check-circle"></i> Delivered</span></td></tr>
+<tr><td>27</td><td>13.02</td><td>Mixology</td><td>Angostura, Lime Juice, Simple Syrup</td><td>$75</td><td><span class="badge ok"><i data-lucide="check-circle"></i> Delivered</span></td></tr>
+<tr><td>26</td><td>12.02</td><td>Schneller Beverages</td><td>Grey Goose x2, Patron Silver x2</td><td>$1,525</td><td><span class="badge ok"><i data-lucide="check-circle"></i> Delivered</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+
+<script>
+// NAV
+document.querySelectorAll('.sidebar nav a').forEach(a=>{
+  a.addEventListener('click',()=>{
+    document.querySelectorAll('.sidebar nav a').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
+    a.classList.add('active');
+    document.getElementById(a.dataset.section).classList.add('active');
+    initCharts();
+    lucide.createIcons();
+    setTimeout(() => { window.dispatchEvent(new Event('resize')); }, 100);
+    document.querySelector('.sidebar').classList.remove('open');
+    document.querySelector('.sidebar-overlay').classList.remove('open');
+  });
+});
+
+const O='#cda843',O2='#d8bb6b',G='#2ECC71',Y='#F39C12',R='#E74C3C',M='#8892A4';
+Chart.defaults.color='#8892A4';Chart.defaults.borderColor='rgba(205,168,67,0.15)';Chart.defaults.font.family='Inter';
+
+let charts={};
+function dc(id){if(charts[id]){charts[id].destroy()}}
+
+// DATA
+const spirits=[
+  ['Absolut Vodka',18,24,6,'warn'],
+  ['Johnnie Walker Black',20,27,7,'warn'],
+  ['Hendrick\'s Gin',19,23,4,'warn'],
+  ['Campari',17,21,4,'warn'],
+  ['Bacardi White',16,22,6,'warn'],
+  ['Jack Daniel\'s',21,28,7,'warn'],
+  ['Grey Goose',22,26,4,'warn'],
+  ['Patron Silver',24,31,7,'bad'],
+  ['Jameson Irish',19,24,5,'warn'],
+  ['Chivas Regal',23,29,6,'warn'],
+  ['Tanqueray Gin',18,22,4,'warn'],
+  ['Captain Morgan',15,20,5,'warn']
+];
+const statusIcon={ok:'<i data-lucide="check-circle"></i>',warn:'<i data-lucide="alert-triangle"></i>',bad:'<i data-lucide="alert-circle"></i>'};
+
+// PC TABLE
+const pcTb=document.getElementById('pcTable');
+spirits.forEach(d=>{
+  pcTb.innerHTML+=`<tr><td>${d[0]}</td><td>${d[1]}%</td><td>${d[2]}%</td><td>${d[3]}%</td><td><span class="badge ${d[4]}">${statusIcon[d[4]]}</span></td></tr>`;
+});
+
+// SUPPLIERS
+const supps=[
+  ['Schneller Beverages','Spirits',32,'054-2559886',4],
+  ['Alcobar','Wine',20,'054-2559886',4],
+  ['Tap Beer Co.','Beer',15,'054-2559886',4],
+  ['Diageo Israel','Premium Spirits',8,'054-2559886',5],
+  ['Pernod Ricard','Spirits',6,'054-2559886',4],
+  ['Mixology','Mixers/Garnish',4,'—',3]
+];
+const sg=document.getElementById('suppGrid');
+supps.forEach(s=>{
+  const starsHtml=Array(s[4]).fill('<i data-lucide="star" class="text-gold"></i>').join('');
+  sg.innerHTML+=`<div class="supplier-card"><div class="name">${s[0]}</div><div class="cat">${s[1]}</div><div class="meta"><span>${s[2]} products</span><span>${s[3]}</span><span class="stars-container">${starsHtml}</span></div></div>`;
+});
+
+// INVENTORY
+const inv=[
+  ['Absolut Vodka','Vodka',8,1,3,'ok','<i data-lucide="check-circle"></i>','Schneller Beverages'],
+  ['Grey Goose','Vodka',1,0,3,'bad','<i data-lucide="alert-circle"></i> Low','Schneller Beverages'],
+  ['Jack Daniel\'s','Whiskey',5,2,3,'ok','<i data-lucide="check-circle"></i>','Schneller Beverages'],
+  ['Johnnie Walker Black','Whiskey',1,1,3,'bad','<i data-lucide="alert-circle"></i> Low','Diageo Israel'],
+  ['Hendrick\'s Gin','Gin',2,1,3,'warn','<i data-lucide="alert-triangle"></i> Close','Diageo Israel'],
+  ['Bacardi White','Rum',2,1,3,'warn','<i data-lucide="alert-triangle"></i> Close','Pernod Ricard'],
+  ['Chivas Regal','Whiskey',4,1,2,'ok','<i data-lucide="check-circle"></i>','Pernod Ricard'],
+  ['House White Wine','Wine',15,3,8,'ok','<i data-lucide="check-circle"></i>','Alcobar'],
+  ['House Red Wine','Wine',12,2,8,'ok','<i data-lucide="check-circle"></i>','Alcobar'],
+  ['Stella Artois','Beer (Keg)',2,1,2,'ok','<i data-lucide="check-circle"></i>','Tap Beer Co.']
+];
+const it=document.getElementById('invTable');
+inv.forEach(i=>{
+  it.innerHTML+=`<tr><td>${i[0]}</td><td>${i[1]}</td><td>${i[2]}</td><td>${i[3]}</td><td>${i[4]}</td><td><span class="badge ${i[5]}">${i[6]}</span></td><td>${i[7]}</td></tr>`;
+});
+
+// CHARTS
+function initCharts(){
+  // Overview line
+  if(document.getElementById('overview').classList.contains('active')){
+    dc('ol');
+    charts.ol=new Chart(document.getElementById('overviewLine'),{type:'line',data:{labels:['Sep','Oct','Nov','Dec','Jan','Feb'],datasets:[{label:'Pour Cost %',data:[26,25,24,23.5,22.5,22],borderColor:O,backgroundColor:'rgba(205,168,67,.15)',tension:.4,fill:true,pointRadius:5,pointBackgroundColor:O}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:false,min:18,max:30,ticks:{callback:v=>v+'%'}}}}});
+    dc('od');
+    charts.od=new Chart(document.getElementById('overviewDoughnut'),{type:'doughnut',data:{labels:['Spirits','Wine','Beer','Mixers','Other'],datasets:[{data:[13363,7957,5730,2546,2229],backgroundColor:[O,'#9B59B6',Y,G,'#E67E22'],borderWidth:0}]},options:{responsive:true,plugins:{legend:{position:'bottom'}}}});
+  }
+  // PC bar
+  if(document.getElementById('pourcost').classList.contains('active')){
+    dc('pb');
+    const spiritNames = spirits.map(d=>d[0]);
+    const theoreticalData = spirits.map(d=>d[1]);
+    const actualData = spirits.map(d=>d[2]);
+    charts.pb=new Chart(document.getElementById('pcBar'),{type:'bar',data:{labels:spiritNames,datasets:[{label:'Theoretical %',data:theoreticalData,backgroundColor:'rgba(205,168,67,.6)',borderRadius:4},{label:'Actual %',data:actualData,backgroundColor:actualData.map((v,i)=>v-theoreticalData[i]>6?R:v-theoreticalData[i]>3?Y:G),borderRadius:4}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{position:'bottom'}},scales:{x:{beginAtZero:true,max:35,ticks:{callback:v=>v+'%'}}}}});
+  }
+  // Suppliers doughnut
+  if(document.getElementById('suppliers').classList.contains('active')){
+    dc('sd');
+    charts.sd=new Chart(document.getElementById('suppDoughnut'),{type:'doughnut',data:{labels:supps.map(s=>s[0]),datasets:[{data:supps.map(s=>s[2]),backgroundColor:[O,'#9B59B6',Y,G,'#E67E22','#3498DB'],borderWidth:0}]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:11}}}}}});
+  }
+  // Inventory bar
+  if(document.getElementById('inventory').classList.contains('active')){
+    dc('ib');
+    charts.ib=new Chart(document.getElementById('invBar'),{type:'bar',data:{labels:inv.map(i=>i[0]),datasets:[{label:'Unopened Bottles',data:inv.map(i=>i[2]),backgroundColor:inv.map(i=>i[5]==='bad'?R:i[5]==='warn'?Y:G),borderRadius:4},{label:'Minimum',data:inv.map(i=>i[4]),backgroundColor:'rgba(136,146,164,.3)',borderRadius:4}]},options:{responsive:true,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}});
+  }
+  // Orders line
+  if(document.getElementById('orders').classList.contains('active')){
+    dc('orl');
+    charts.orl=new Chart(document.getElementById('ordLine'),{type:'line',data:{labels:['5.02','6.02','7.02','8.02','9.02','10.02','11.02','12.02','13.02','14.02','15.02','16.02','17.02','18.02'],datasets:[{label:'Order Amount $',data:[859,0,1288,751,0,1450,1047,75,1275,575,988,0,1525,1140],borderColor:O,backgroundColor:'rgba(205,168,67,.1)',tension:.3,fill:true,pointRadius:4,pointBackgroundColor:O}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:v=>'$'+v.toLocaleString()}}}}});
+  }
+}
+initCharts();
+lucide.createIcons();
+</script>
+</body>
+</html>
