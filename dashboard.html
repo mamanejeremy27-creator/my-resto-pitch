@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>MyCostAI — דשבורד מסעדה</title>
+<title>Costara — דשבורד מסעדה</title>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
@@ -81,6 +81,7 @@ table tr:hover{background:rgba(205,168,67,.05)}
 .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:49}
 
 @media(max-width:768px){
+  html,body{overflow-x:hidden!important;max-width:100vw!important}
   .mobile-hamburger{display:none!important}
   .sidebar-overlay{display:none!important}
   .sidebar{width:100%!important;height:60px!important;min-height:60px!important;max-height:60px!important;position:fixed!important;bottom:0!important;top:auto!important;right:0!important;left:0!important;flex-direction:row!important;border-left:none!important;border-top:1px solid var(--border)!important;z-index:200!important;padding:0!important;overflow:visible!important;transform:none!important;display:flex!important;visibility:visible!important;opacity:1!important}
@@ -90,22 +91,25 @@ table tr:hover{background:rgba(205,168,67,.05)}
   .sidebar nav a.active{border-right-color:transparent!important;border-top-color:var(--orange)!important}
   .sidebar nav a .icon{margin:0!important}
   .sidebar nav a span:last-child{display:block!important;font-size:9px!important;white-space:nowrap}
-  .main{margin-right:0!important;padding:14px 12px calc(80px + env(safe-area-inset-bottom)) 12px!important}
-  h1{font-size:1.25rem;margin-bottom:16px}
+  .main{margin-right:0!important;padding:14px 12px calc(80px + env(safe-area-inset-bottom)) 12px!important;max-width:100vw!important;overflow-x:hidden!important}
+  h1{font-size:1.1rem;margin-bottom:16px;word-break:break-word}
   .kpi-row{grid-template-columns:repeat(2,1fr)!important;gap:8px;margin-bottom:16px}
-  .kpi{padding:12px 10px}
+  .kpi{padding:12px 10px;overflow:hidden}
   .kpi .value{font-size:1.2rem}
-  .kpi .label{font-size:.7rem}
+  .kpi .label{font-size:.7rem;word-break:break-word}
   .kpi .sub{font-size:.65rem}
+  .summary-box{gap:10px;padding:14px;justify-content:space-between}
+  .summary-box .item{flex:1;min-width:0}
+  .summary-box .item .val{font-size:1.1rem}
+  .summary-box .item .lbl{font-size:.65rem;word-break:break-word}
   .chart-card canvas{width:100%!important;height:auto!important}
+  .chart-card.full{overflow-x:auto;-webkit-overflow-scrolling:touch}
   .charts-row{grid-template-columns:1fr;gap:12px;margin-bottom:16px}
-  .chart-card{padding:14px}
+  .chart-card{padding:14px;overflow:hidden}
   .chart-card h3{font-size:.85rem;margin-bottom:12px}
   .table-card{padding:12px;margin-bottom:16px;overflow-x:auto;-webkit-overflow-scrolling:touch}
   .table-card table{min-width:540px}
   table th,table td{padding:8px 10px;font-size:.78rem}
-  .summary-box{gap:16px;padding:14px}
-  .summary-box .item .val{font-size:1.15rem}
   .supplier-grid{grid-template-columns:1fr;gap:10px}
   .supplier-card{padding:14px}
   .alerts .alert{padding:10px 12px;font-size:.8rem}
@@ -113,8 +117,11 @@ table tr:hover{background:rgba(205,168,67,.05)}
 }
 @media(max-width:400px){
   .kpi-row{grid-template-columns:1fr 1fr}
-  .main{padding:10px 8px}
-  .kpi .value{font-size:1.2rem}
+  .main{padding:10px 8px!important}
+  .kpi .value{font-size:1rem}
+  h1{font-size:1rem}
+  .summary-box .item .val{font-size:1rem}
+  .summary-box .item .lbl{font-size:.6rem}
 }
 </style>
 </head>
@@ -123,7 +130,7 @@ table tr:hover{background:rgba(205,168,67,.05)}
 <div class="sidebar-overlay" onclick="document.querySelector('.sidebar').classList.remove('open');this.classList.remove('open')"></div>
 <aside class="sidebar">
 <div class="logo" style="padding:12px 16px 20px;border-bottom:1px solid var(--border);margin-bottom:12px;text-align:center">
-  <img src="logo.png" alt="MyCostAI" style="max-width:140px;height:auto;margin-bottom:4px">
+  <img src="logo.png" alt="Costara" style="max-width:140px;height:auto;margin-bottom:4px">
 </div>
 <nav>
 <a data-section="overview" class="active"><span class="icon"><i data-lucide="layout-dashboard"></i></span><span>סקירה כללית</span></a>
@@ -132,7 +139,7 @@ table tr:hover{background:rgba(205,168,67,.05)}
 <a data-section="inventory"><span class="icon"><i data-lucide="package"></i></span><span>מלאי</span></a>
 <a data-section="orders"><span class="icon"><i data-lucide="shopping-cart"></i></span><span>הזמנות</span></a>
 </nav>
-  <div class="sidebar-footer">Powered by MyCostAI &copy; 2026</div>
+  <div class="sidebar-footer">Powered by Costara &copy; 2026</div>
 </aside>
 <main class="main">
 
